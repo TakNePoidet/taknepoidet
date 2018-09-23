@@ -37,6 +37,19 @@ module.exports = {
 		'~plugins/taknepoidet'
 	],
 	cache: true,
+	modules: [
+		[
+		'@nuxtjs/yandex-metrika',
+			{
+			id: '39689345',
+			webvisor: true,
+			// clickmap:true,
+			// useCDN:false,
+			// trackLinks:true,
+			// accurateTrackBounce:true,
+			}
+		],
+	],
 	build: {
 		/*
 		** Run ESLint on save

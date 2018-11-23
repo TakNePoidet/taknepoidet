@@ -8,7 +8,7 @@ import {mapActions}  from 'vuex';
 import AppHeader from '~/components/Header.vue'
 export default {
 	created() {
-		this.setLocale('en');
+		// this.setLocale('en');
 	},
 	mounted() {
 		this.$store.commit('setHeader', this.$refs.header);

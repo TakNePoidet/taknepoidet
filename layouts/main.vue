@@ -2,20 +2,17 @@
 	<div>
 		<app-header ref="header"></app-header>
 		<nuxt/>
-		<footer class="footer" id="footer">
-			<b>TakNePoidet <i class="far fa-copyright"></i> 
-			{{new Date().getFullYear()}}</b><br>
-			<small>By {{$store.state.lang.section.footer.name}}</small>
-		</footer>
+		<app-footer/>
 	</div>
 </template>
 <script>
 import {mapActions}  from 'vuex';
 import AppHeader from '~/components/Header.vue'
+import AppFooter from '~/components/AppFooter.vue'
 export default {
 	created() {
 		// this.init();
-		this.setLocale('ru');
+		// this.setLocale('ru');
 		
 	},
 	mounted() {
@@ -28,7 +25,7 @@ export default {
 		...mapActions(['setLocale','init']),
 	},
 	components: {
-		AppHeader
+		AppHeader,AppFooter
 	}
 }
 </script>

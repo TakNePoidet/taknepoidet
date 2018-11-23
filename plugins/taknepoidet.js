@@ -17,8 +17,6 @@ if (process.browser) {
 }
 
 if (process.browser) {
-
-
 	import('wow.js').then(WOW => {
 
 		// console.log(Response);
@@ -44,8 +42,10 @@ Vue.use(VueScrollTo,{
 	force: true,
 	cancelable: true,
 	onStart: false,
-	onDone: false,
+	onDone: function(e) {
+
+	},
 	onCancel: false,
 	x: false,
 	y: true
-})
+});

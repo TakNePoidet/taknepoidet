@@ -26,7 +26,7 @@ module.exports = {
 	/*
 	** Customize the progress bar color
 	*/
-	loading: { color: '#3B8070' },
+	loading: { color: '#262E58' },
 	/*
 	** Build configuration
 	*/
@@ -34,7 +34,8 @@ module.exports = {
 		'~assets/css/style.scss'
 	],
 	plugins: [
-		'~plugins/taknepoidet'
+		'~plugins/init',
+		'~plugins/taknepoidet',
 	],
 	cache: true,
 	modules: [
@@ -49,12 +50,29 @@ module.exports = {
 			// accurateTrackBounce:true,
 			}
 		],
+		['cookie-universal-nuxt', { alias: 'cookiz' }],
 	],
+
+	router : {
+		scrollBehavior(to, from, savedPosition) {
+			if (to.hash && document.querySelector(to.hash)) {
+				return { selector: to.hash }
+			} else if (savedPosition) {
+				return savedPosition;
+			} else {
+				return { x: 0, y: 0 }
+			}
+		}
+	},
 	build: {
 		/*
 		** Run ESLint on save
 		*/
 		extractCSS : true,
+		postcss: [
+			require('postcss-css-variables')(),
+			require('autoprefixer')()
+		],
 		vendor: ['axios'],
 		filenames: {
 			css: 'common.[contenthash].css',

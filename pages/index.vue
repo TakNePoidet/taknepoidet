@@ -27,7 +27,7 @@
 			</h2>
 			<ul class="social_networks__links">
 				<li 
-					v-for="(item, key) in getSocialNetworks" 
+					v-for="(item, key) in social_networks" 
 					:key="item.key" 
 					:class="['wow', ((key & 1) ? 'bounceInUp' : 'bounceInDown'),'social_networks__item', 'social_networks__item--' + item.key]"
 					:data-wow-delay="key / 10 + 's'"
@@ -52,7 +52,7 @@
 						<div class="news__cover">
 							<img v-bind:src="$store.state.api + 'images/cover/' + item.photo[0]" 
 								:alt="item.text || item.date_str"
-								:srcset="$store.state.api + 'images/cover/' + item.photo[1]"
+								:srcset="$store.state.api + 'images/cover/' + item.photo[1] + ' 2x'"
 								>
 						</div>
 						<div class="news__content">
@@ -63,15 +63,43 @@
 			</div>
 			<div class="news__none" v-if="news.length < 1"></div>
 		</div>
+		
+		<div class="section-landing" id="landing-list">
+			<svg class="section-landing-svg-top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1501 52.166"><path d="M106.969,52.418h0V.253h1501l-1501,52.165Z" transform="translate(-106.969 -0.253)"/></svg>
+			<h2 class="section-title">
+				{{$store.state.lang.section.landing_list.title}}
+			</h2>
+
+			<div class="landing-crop">
+				<div class="landing-crop__wrap">
+					<div class="landing-crop-item wow zoomIn" v-for="(item) in rand_landing()" :key="item.key">
+						<a :href="item.link" target="_blank" rel="nofollow">
+							<div class="landing-crop-item__images">
+								<img :src="`${$store.state.api}/images/landing/crop/${item.filename}@1x.jpg`" 
+									 :alt="item.title"
+									 :srcset="`${$store.state.api}images/landing/crop/${item.filename}@2x.jpg 2x`"
+								>
+							</div>
+							<div class="landing-crop-item__title">{{item.title[getLocale]}}</div>
+						</a>
+					</div>
+				</div>
+
+				<a href="/landing" target="blank" class="landing-crop-all">{{$store.state.lang.section.landing_list.more}}</a>
+			</div>
+			<svg class="section-landing-svg-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1501 52.166"><path d="M106.969,52.418h0V.253h1501l-1501,52.165Z" transform="translate(1607.969 52.418) rotate(180)"/></svg>
+		</div>
 		<div class="project" id="project">
 			<h2 class="section-title">
 				{{$store.state.lang.section.project.title}}
 			</h2>
 			<div class="project__wrap">
-				<div class="project__item wow fadeInRight" v-for="item of getProject" :key="item.link">
+				<div class="project__item wow flipInX" v-for="item of project" :key="item.link">
 					<a target="_blank" :href="item.link">
-						<div class="project__cover">
-							<img :src="`/images/${item.images}`">
+						<div class="project__images">
+							<img :src="`${$store.state.api}/images/projects/${item.images}.jpg`" 
+									 :srcset="`${$store.state.api}images/projects/${item.images}@2x.jpg 2x`"
+								>
 						</div>
 						<div class="project__name">
 							{{item.title[getLocale]}}
@@ -79,25 +107,50 @@
 					</a>
 				</div>			
 			</div>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1501.37 30.818"><g transform="translate(5277.37 6670)"><path d="M0,30.64H0V0H1501L0,30.64Z" transform="translate(-3776 -6639.36) rotate(180)"/><path d="M106.969.253h0V30.906H1608.339L106.969.253Z" transform="translate(-5384.339 -6670.087)"/></g></svg>
 		</div>
 	</main>
 </template>
 
 <script>
 import { mapActions,mapGetters } from 'vuex';
+import axios from 'axios'
 export default {
 
-
+	head () {
+		return {
+			title: this.title,
+			meta: [
+				{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
+				{ hid: 'description', name: 'description', content: this.description },
+			],
+		}
+	},
 	layout: 'main',
 	async asyncData ({ params, store }) {
-		let news = await store.dispatch('getNewsApi');
+
+
+		let { data } = await axios.get(`${store.state.api}method/all`);
+		let news 				= data.news;
+		let social_networks	 	= data.social_networks;
+		let landing			 	= data.landing;
+		let project 			= data.project;
+
+		let title 		=  store.state.lang.page.index.title;
+		let description =  store.state.lang.page.index.description;
 		return {
-			news
+			news,social_networks,project,landing,title,description
 		}
 	},
 	data() {
 		return {
-			news : []
+			news : [],
+			social_networks : [],
+			project : [],
+			landing	: [],
+			description : '',
+			title 		: '',
+
 		}
 	},
 	created() {
@@ -112,7 +165,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
-			'getHeader','getSocialNetworks','getProject','getLocale'
+			'getHeader','getLocale'
 		])
 	},
 	methods : {
@@ -127,6 +180,20 @@ export default {
 				this.getHeader.fixed = true;
 			} else {
 				this.getHeader.fixed = false;
+				this.getHeader.open = false;
+			}
+		},
+
+		rand_landing() {
+			if (process.browser) {
+				let landing = this.landing.slice();
+
+				landing = landing.filter(el => {
+					return (el.top === true);
+				});
+				
+				let rand_landing = landing.sort(function (a, b) {return Math.random() - 0.5;});
+				return rand_landing.slice(0,6);
 			}
 		}
 	}

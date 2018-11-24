@@ -78,7 +78,7 @@
 							<div class="landing-crop-item__images">
 								<img
 									:src="`${$store.state.api}/images/landing/crop/${item.filename}@1x.jpg`"
-									:alt="item.title"
+									:alt="item.title[getLocale]"
 									:srcset="`${$store.state.api}images/landing/crop/${item.filename}@2x.jpg 2x`"
 								>
 							</div>
@@ -170,10 +170,12 @@ export default {
 	},
 
 	mounted() {
-		if (process.browser) {
-			const jarallax = require('jarallax').jarallax
-			jarallax(this.$refs['section-background-images'], {
-				speed: 0
+		if (process.browser && navigator.appVersion.indexOf('MSIE 10') === -1) {
+			import('jarallax').then(Response => {
+				let jarallax = Response.default.jarallax
+				jarallax(this.$refs['section-background-images'], {
+					speed: 0
+				})
 			})
 		}
 	},

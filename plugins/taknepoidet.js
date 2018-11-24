@@ -1,9 +1,5 @@
 import Vue from 'vue'
-// import { , jarallaxElement, jarallaxVideo } from 'jarallax'
-
-if (process.browser) {
-	const jarallax = require('jarallax').jarallax
-}
+// import '@babel/polyfill'
 if (process.browser) {
 	// window.addEventListener('load', () => {
 	console.log(
@@ -28,19 +24,19 @@ if (process.browser) {
 
 if (process.browser) {
 	// const WOW = require('wow.js')
-	// import('wow.js').then(WOW => {
-	// console.log(Response);
-	// let WOW = Response.default;
-	let wow = new WOW({
-		boxClass: 'wow', // animated element css class (default is wow)
-		animateClass: 'animated', // animation css class (default is animated)
-		offset: 50, // distance to the element when triggering the animation (default is 0)
-		mobile: false, // trigger animations on mobile devices (default is true)
-		live: true, // act on asynchronously loaded content (default is true)
-		scrollContainer: null // optional scroll container selector, otherwise use window
+	import('wow.js').then(Response => {
+		// console.log(WOW)
+		let WOW = Response.default
+		let wow = new WOW({
+			boxClass: 'wow', // animated element css class (default is wow)
+			animateClass: 'animated', // animation css class (default is animated)
+			offset: 50, // distance to the element when triggering the animation (default is 0)
+			mobile: false, // trigger animations on mobile devices (default is true)
+			live: true, // act on asynchronously loaded content (default is true)
+			scrollContainer: null // optional scroll container selector, otherwise use window
+		})
+		wow.init()
 	})
-	wow.init()
-	// })
 }
 
 import VueScrollTo from 'vue-scrollto'

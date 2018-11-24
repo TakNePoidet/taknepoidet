@@ -33,7 +33,9 @@ module.exports = {
 				content: 'oKl2A6Zsi1pzXSzbqnbPSZi9j6cGTP-SVetE67RCd44'
 			}
 		],
-		link: [{ rel: 'icon', type: 'image/png', href: '/images/favicon.png' }]
+
+		link: [{ rel: 'icon', type: 'image/png', href: '/images/favicon.png' }],
+		// script: [{ src: 'https://yastatic.net/browser-updater/v1/script.js' }]
 	},
 
 	/*
@@ -58,6 +60,7 @@ module.exports = {
 		// Doc: https://github.com/nuxt-community/axios-module#usage
 		[
 			'@nuxtjs/axios',
+			'@babel/polyfill',
 			'@nuxtjs/yandex-metrika',
 			{
 				id: '39689345',
@@ -84,7 +87,9 @@ module.exports = {
 		extractCSS: true,
 		postcss: [
 			require('postcss-css-variables')(),
-			require('autoprefixer')(['last 15 versions'])
+			require('autoprefixer')({
+				browsers: ['last 2 versions', 'ie 10-11', 'Firefox > 20']
+			})
 		],
 
 		filenames: {
@@ -104,12 +109,19 @@ module.exports = {
 		extend(config, ctx) {
 			// Run ESLint on save
 			if (ctx.isDev && ctx.isClient) {
-				config.module.rules.push({
-					enforce: 'pre',
-					test: /\.(js|vue)$/,
-					loader: 'eslint-loader',
-					exclude: /(node_modules)/
-				})
+				config.module.rules.push(
+					{
+						enforce: 'pre',
+						test: /\.(js|vue)$/,
+						loader: 'eslint-loader',
+						exclude: /(node_modules)/
+					},
+					{
+						test: /\.(js)$/,
+						loader: 'babel-loader',
+						exclude: /(node_modules)/
+					}
+				)
 			}
 		}
 	}

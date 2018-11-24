@@ -13,6 +13,7 @@
 		"precommit": "npm run lint"
 	},
 	"dependencies": {
+		"@babel/polyfill": "^7.0.0",
 		"@nuxtjs/axios": "^5.0.0",
 		"@nuxtjs/yandex-metrika": "^0.1.0",
 		"cookie-universal-nuxt": "^2.0.11",
@@ -33,6 +34,7 @@
 		"@babel/plugin-syntax-import-meta": "^7.0.0",
 		"@babel/plugin-transform-async-to-generator": "^7.1.0",
 		"@babel/preset-env": "^7.1.6",
+		"@babel/runtime": "^7.1.5",
 		"autoprefixer": "^9.3.1",
 		"babel-eslint": "^8.2.1",
 		"eslint": "^5.0.1",

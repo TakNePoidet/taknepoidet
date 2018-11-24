@@ -79,7 +79,6 @@ const actions = {
 				maxAge: 60 * 60 * 24 * 7
 			})
 		}
-
 	},
 
 	async getNewsApi(context) {

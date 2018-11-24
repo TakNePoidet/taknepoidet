@@ -1,5 +1,9 @@
 import Vue from 'vue'
+// import { , jarallaxElement, jarallaxVideo } from 'jarallax'
 
+if (process.browser) {
+	const jarallax = require('jarallax').jarallax
+}
 if (process.browser) {
 	// window.addEventListener('load', () => {
 	console.log(
@@ -23,7 +27,7 @@ if (process.browser) {
 }
 
 if (process.browser) {
-	const WOW = require('wow.js')
+	// const WOW = require('wow.js')
 	// import('wow.js').then(WOW => {
 	// console.log(Response);
 	// let WOW = Response.default;

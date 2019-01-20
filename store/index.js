@@ -6,6 +6,7 @@ Vue.use(Vuex)
 const state = {
 	baseurl: `https://taknepoidet.ru/`,
 	api: `https://api.taknepoidet.ru/`,
+	storage: `https://storage.taknepoidet.ru`,
 	lang: {},
 	locale: null,
 	language: ['en', 'ru'],
@@ -55,11 +56,11 @@ const actions = {
 		let locate
 		commit('setLocale', lang)
 		try {
-			let { data } = await axios.get(`${state.api}method/locate/${lang}`)
+			let { data } = await axios.get(`${state.api}methods/locate/${lang}`)
 			locate = data.lang
 			lang = data.locate
 		} catch (error) {
-			console.log(error)
+			console.log(1)
 		}
 
 		commit('setLang', locate)
@@ -84,7 +85,7 @@ const actions = {
 	async getNewsApi(context) {
 		let { state } = context
 		try {
-			let { data } = await axios.get(`${state.api}method/news`)
+			let { data } = await axios.get(`${state.api}methods/news`)
 			return data
 		} catch (error) {
 			console.log(error)

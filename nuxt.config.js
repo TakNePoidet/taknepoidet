@@ -34,7 +34,7 @@ module.exports = {
 			}
 		],
 
-		link: [{ rel: 'icon', type: 'image/png', href: '/images/favicon.png' }],
+		link: [{ rel: 'icon', type: 'image/png', href: '/images/favicon.png' }]
 		// script: [{ src: 'https://yastatic.net/browser-updater/v1/script.js' }]
 	},
 
@@ -51,7 +51,12 @@ module.exports = {
 	/*
 	 ** Plugins to load before mounting the App
 	 */
-	plugins: ['~plugins/init', '~plugins/taknepoidet'],
+	plugins: [
+		'~plugins/init',
+		'~plugins/taknepoidet',
+		{ src: '~/plugins/SwipeSlider', ssr: false },
+		{ src: '~/plugins/Device', ssr: false }
+	],
 	cache: true,
 	/*
 	 ** Nuxt.js modules

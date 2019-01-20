@@ -1,19 +1,21 @@
 <template>
 	<main>
-
 		<div class="section-landing">
-			<h2 class="section-title">
-				{{ $store.state.lang.section.landing_list.title }}
-			</h2>
+			<h2 class="section-title">{{ $store.state.lang.section.landing_list.title }}</h2>
 			<div ref="grid" class="grid">
-				<div v-for="(item, key) in rand_landing()" :key="item.key" :class="[key > 3 ? 'wow' : '']" class="grid-item bounceInUp">
+				<div
+					v-for="(item, key) in rand_landing()"
+					:key="item.key"
+					:class="[key > 3 ? 'wow' : '']"
+					class="grid-item bounceInUp"
+				>
 					<div class="grid-item__title">{{ item.title[getLocale] }}</div>
 					<div class="grid-item__images">
 						<a :href="item.link" target="_blank" rel="nofollow">
 							<img
-								:src="`${$store.state.api}images/landing/normal/${item.filename}@1x.jpg`"
-								:alt="item.title"
-								:srcset="`${$store.state.api}images/landing/normal/${item.filename}@2x.jpg`"
+								:src="`${$store.state.storage}/images/landing/normal/${item.filename}@1x.jpg`"
+								:alt="item.title[getLocale]"
+								:srcset="`${$store.state.storage}/images/landing/normal/${item.filename}@2x.jpg`"
 								:width="item.images.normal.width + 'px'"
 								:height="item.images.normal.height + 'px'"
 							>
@@ -23,7 +25,11 @@
 			</div>
 
 			<div class="madeinbananstydio">
-				<a class="madeinbananstydio__link" rel="nofollow" href="https://www.instagram.com/studiya.banan/">
+				<a
+					class="madeinbananstydio__link"
+					rel="nofollow"
+					href="https://www.instagram.com/studiya.banan/"
+				>
 					<div class="madeinbananstydio__text">{{ $store.state.lang.page.landing.banan }}</div>
 					<div class="madeinbananstydio__logo"/>
 				</a>
@@ -55,11 +61,15 @@ export default {
 	},
 
 	async asyncData({ params, store }) {
-		let { data } = await axios.get(`${store.state.api}method/landing`)
-		return {
-			landing: data,
-			title: store.state.lang.page.landing.title,
-			description: store.state.lang.page.landing.description
+		try {
+			let { data } = await axios.get(`${store.state.api}methods/landing`)
+			return {
+				landing: data,
+				title: store.state.lang.page.landing.title,
+				description: store.state.lang.page.landing.description
+			}
+		} catch (error) {
+			console.log(error)
 		}
 	},
 	data() {

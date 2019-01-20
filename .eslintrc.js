@@ -14,7 +14,7 @@ module.exports = {
 	rules: {
 		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-		'indent': ['error', 'tab'],
+		indent: ['error', 'tab', { SwitchCase: 1 }],
 		'vue/html-indent': [
 			'error',
 			'tab',
@@ -23,12 +23,15 @@ module.exports = {
 			}
 		],
 
-		'vue/max-attributes-per-line': [2, {
-			"singleline": 4,
-			"multiline": {
-			  "max": 4,
-			  "allowFirstLine": false
+		'vue/max-attributes-per-line': [
+			0,
+			{
+				singleline: 4,
+				multiline: {
+					max: 4,
+					allowFirstLine: false
+				}
 			}
-		  }]
+		]
 	}
 }

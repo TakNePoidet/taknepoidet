@@ -146,10 +146,10 @@ void (function(window, factory) {
 
 			end(event) {
 				if (!locked) return false
-
+				let k = (container.getBoundingClientRect().width / 100) * 25
 				let isValidSlide =
-					(Number(duration) < 20 && Math.abs(delta.x) > 20) ||
-					Math.abs(delta.x) > 20
+					(Number(duration) < k && Math.abs(delta.x) > k) ||
+					Math.abs(delta.x) > k
 				let duration = +new Date() - startDrag.time
 
 				if (isValidSlide) {

@@ -64,7 +64,7 @@
 		</div>
 		<div id="news" class="section-news">
 			<h2 class="section-title">{{ $store.state.lang.section.news.title }}</h2>
-			<div v-if="news.length > 1" ref="news" class="news">
+			<div v-if="news.length > 1" ref="news" class="news-container news-container--grid">
 				<news-min v-for="item in news" :key="item.id" :data="item" />
 			</div>
 			<div v-if="news.length < 1" class="news__none"/>

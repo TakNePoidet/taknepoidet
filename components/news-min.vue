@@ -27,11 +27,7 @@
 						class="news__content__text"
 					>
 						<p>{{ data.content | capitalize }}</p>
-						<a
-							:href="`https://vk.com/wall20513451_${data.vk_id}`"
-							class="news__more"
-							target="_blank"
-						>{{ $store.state.lang.news.more }}</a>
+						<nuxt-link :to="`/news/${data.id}`" class="news__more">{{ $store.state.lang.news.more }}</nuxt-link>
 					</div>
 				</div>
 			</div>
@@ -144,7 +140,3 @@ export default {
 	}
 }
 </script>
-<style lang="scss" scoped>
-button {
-}
-</style>

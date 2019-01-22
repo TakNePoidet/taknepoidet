@@ -67,6 +67,12 @@
 			<div v-if="news.length > 1" ref="news" class="news-container news-container--grid">
 				<news-min v-for="item in news" :key="item.id" :data="item" :animation="true" />
 			</div>
+			<nuxt-link
+				v-if="news.length > 1"
+				to="/news"
+				target="blank"
+				class="news-all-list"
+			>{{ $store.state.lang.section.landing_list.more }}</nuxt-link>
 			<div v-if="news.length < 1" class="news__none"/>
 		</div>
 

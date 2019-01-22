@@ -2,16 +2,12 @@
 	<main>
 		<div id="news" class="section-news">
 			<h1 class="page-title">{{ $store.state.lang.section.news.title }}</h1>
-
-			<nuxt-link v-if="page > 1" :to="'?page=' + (page - 1)">&lt; Prev</nuxt-link>
-			<a v-else class="disabled">&lt; Prev</a>
-			<span>{{ page }}/{{ totalPages }}</span>
-			<nuxt-link v-if="page < totalPages" :to="'?page=' + (page + 1)">Next &gt;</nuxt-link>
-
 			<div v-if="news.length > 1" ref="news" class="news-container-pages">
 				<news-min v-for="item in news" :key="item.id" :data="item"/>
 			</div>
 			<div v-if="news.length < 1" class="news__none"/>
+
+			<paginate :current="page" :all="allCount" :count-page="21" parent-link="/news/"/>
 		</div>
 	</main>
 </template>
@@ -21,21 +17,18 @@
 import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
 import NewsMin from '~/components/news-min.vue'
-
+import Paginate from '~/components/paginate.vue'
 export default {
 	watchQuery: ['page'],
 	key: to => to.fullPath,
 	// Called to know which transition to apply
 	transition(to, from) {
 		if (!from) return 'slide-left'
-
-		console.log(
-			+to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
-		)
 		return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
 	},
 	components: {
-		NewsMin
+		NewsMin,
+		Paginate
 	},
 	layout: 'pages-standart',
 	head() {
@@ -71,14 +64,9 @@ export default {
 			)
 
 			let totalPages = Math.round(data.response.count / count) + 1
-
-			console.log({
-				page,
-				totalPages
-			})
 			return {
 				page: page,
-				totalPages: totalPages,
+				allCount: parseInt(data.response.count),
 				news: data.response.items,
 				title: store.state.lang.section.news.title
 				// description: store.state.lang.page.landing.description

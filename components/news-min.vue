@@ -1,7 +1,7 @@
 <template>
 	<div
 		v-if="data"
-		:class="['wow', 'bounceInUp', 'news', `news--${data.reversing}`, ((!isMobile) ? 'news--hover' : 'news--swipe')]"
+		:class="[(animation) ? 'wow' : '', animation ? 'bounceInUp' : '', 'news', `news--${data.reversing}`, ((!isMobile) ? 'news--hover' : 'news--swipe')]"
 	>
 		<div class="news__cover">
 			<img
@@ -77,6 +77,12 @@ export default {
 			type: Object,
 			default: () => {
 				return null
+			}
+		},
+		animation: {
+			type: Boolean,
+			default: () => {
+				return false
 			}
 		}
 	},

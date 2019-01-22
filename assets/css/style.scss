@@ -26,7 +26,7 @@ $color_main: #262e58;
 body {
 	font-weight: 400;
 	font-size: 16px;
-	// overflow-x: hidden;
+	overflow-x: hidden;
 	overflow-y: auto;
 	min-width: $MinWidth;
 	margin: 0px;
@@ -34,7 +34,7 @@ body {
 	background: var(--color-body);
 	margin: 0 auto;
 
-	font-family: 'Fira Sans', sans-serif;
+	font-family: 'Roboto', sans-serif;
 }
 
 main {
@@ -437,9 +437,10 @@ main {
 }
 
 .section-title {
+	font-weight: 500;
 	display: block;
 	text-align: center;
-	text-transform: uppercase;
+	// text-transform: uppercase;
 	font-size: 34px;
 	line-height: 1.2;
 	color: var(--color-main);
@@ -1456,7 +1457,6 @@ body.body-landing-page {
 }
 .body-pages-standart {
 	.page-title {
-
 		display: block;
 		text-align: center;
 		font-size: 34px;
@@ -1478,4 +1478,19 @@ body.body-landing-page {
 		max-width: var(--container);
 		margin: 0px auto;
 	}
+}
+
+main {
+	transition: all 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.slide-left-enter,
+.slide-right-leave-active {
+	opacity: 0;
+	transform: translate(30px, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+	opacity: 0;
+	transform: translate(-30px, 0);
 }

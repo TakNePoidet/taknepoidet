@@ -24,6 +24,16 @@ import NewsMin from '~/components/news-min.vue'
 
 export default {
 	watchQuery: ['page'],
+	key: to => to.fullPath,
+	// Called to know which transition to apply
+	transition(to, from) {
+		if (!from) return 'slide-left'
+
+		console.log(
+			+to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
+		)
+		return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
+	},
 	components: {
 		NewsMin
 	},
@@ -55,10 +65,9 @@ export default {
 			let page = +query.page || 1
 
 			let offset = (page - 1) * count
+
 			let { data } = await axios.get(
-				`${
-					store.state.api
-				}methods/news/?count=${count}&offset=${offset}`
+				`${store.state.api}methods/news?count=${count}&offset=${offset}`
 			)
 
 			let totalPages = Math.round(data.response.count / count) + 1

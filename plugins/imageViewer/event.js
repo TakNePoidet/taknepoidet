@@ -52,8 +52,9 @@ TouchEvent.prototype.init = function() {
 		function endListener(emove) {
 			document.removeEventListener(touchMove, moveListener)
 			document.removeEventListener(touchEnd, endListener)
-			var mx = emove.clientX || emove.touches[0].clientX
-			var my = emove.clientY || emove.touches[0].clientY
+
+			var mx = emove.clientX
+			var my = emove.clientY
 			self.onEnd(emove, {
 				dx: mx - sx,
 				dy: my - sy,

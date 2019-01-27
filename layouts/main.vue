@@ -7,7 +7,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import AppHeader from '~/components/Header.vue'
+import AppHeader from '~/components/HeaderMainPage.vue'
 import AppFooter from '~/components/AppFooter.vue'
 export default {
 	components: {

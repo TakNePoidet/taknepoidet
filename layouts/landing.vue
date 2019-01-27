@@ -1,18 +1,18 @@
 <template>
 	<div>
-		<app-header-logo/>
+		<app-header/>
 		<nuxt/>
 		<app-footer/>
 	</div>
 </template>
 <script>
 import { mapActions } from 'vuex'
-import AppHeaderLogo from '~/components/HeaderLogo.vue'
+import AppHeader from '~/components/Header.vue'
 import AppFooter from '~/components/AppFooter.vue'
 
 export default {
 	components: {
-		AppHeaderLogo,
+		AppHeader,
 		AppFooter
 	},
 	mounted() {

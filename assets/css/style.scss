@@ -41,7 +41,7 @@ main {
 	position: relative;
 }
 
-.header {
+.header-main-page {
 	$self: &;
 	width: 100%;
 	background: transparent;
@@ -327,6 +327,223 @@ main {
 				transition: all 0.2s;
 			}
 		}
+	}
+}
+
+.header {
+	$self: &;
+	width: 100%;
+	background: #fff;
+	z-index: 4;
+	top: 0px;
+	position: relative;
+	height: 90px;
+	overflow: hidden;
+	transition: all ease-out 0.4s;
+	&__wrap {
+		max-width: var(--container);
+		margin: auto;
+		display: flex;
+		justify-content: space-between;
+		transition: all ease-out 0.4s;
+		padding: {
+			left: -15px;
+			right: -15px;
+		}
+		& > div {
+			transition: all ease-out 0.4s;
+		}
+
+		position: relative;
+	}
+	&__logo {
+		padding: 15px;
+		display: flex;
+		align-items: center;
+		justify-content: start;
+		overflow: hidden;
+		transition: all ease-out 0.4s;
+		position: relative;
+		outline: none;
+		a {
+			outline: none;
+		}
+		svg {
+			pointer-events: none;
+			max-height: 60px;
+			width: 100%;
+			.a {
+				fill: transparent;
+			}
+			.b {
+				fill: #262e58;
+				transition: all 0.2s;
+			}
+		}
+	}
+	#{$self}__bars,
+	#{$self}__prew {
+		display: flex;
+		align-items: center;
+		justify-content: end;
+		font-size: 35px;
+		padding: 0px 30px;
+		color: var(--color-main);
+		transform: scale(1);
+		height: 90px;
+		cursor: pointer;
+		&:hover {
+			text-decoration: none;
+			background: darken($color: #ffffff, $amount: 5);
+		}
+
+		@media screen and (max-width: 500px) {
+			padding: 15px 25px;
+			font-size: 20px;
+			// height: 70px;
+		}
+	}
+
+	.mainnav {
+		transform: translateY(-100%);
+		left: 0px;
+		margin: 0;
+		opacity: 0;
+		visibility: hidden;
+		width: 100%;
+		ul {
+			right: 0;
+			overflow-y: auto;
+			margin: auto;
+			padding: 0;
+			max-width: var(--container);
+			justify-content: center;
+			align-items: flex-start;
+			flex-wrap: wrap;
+			// flex-direction: column;
+			position: relative;
+			display: flex;
+			list-style: none;
+			li {
+				a {
+					padding: 30px 15px;
+					color: #ffffff;
+					font-size: 20px;
+					font-weight: 500;
+					margin: 0px 10px;
+					padding: 35px 15px;
+					line-height: 1;
+					display: block;
+					text-decoration: none;
+					transition: all ease-out 0.1s;
+					&:hover {
+						opacity: 0.8;
+					}
+				}
+			}
+		}
+	}
+	// @media screen and (max-width: 900px) {
+	// 	background: #fff;
+	// 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
+	// 	#{$self}__wrap {
+	// 		margin-top: 0px;
+	// 	}
+	// 	.mainnav {
+	// 		transform: translateY(-100%);
+	// 		left: 0px;
+	// 		margin: 0;
+	// 		opacity: 0;
+	// 		visibility: hidden;
+	// 		width: 100%;
+	// 		ul {
+	// 			right: 0;
+	// 			overflow-y: auto;
+	// 			margin: auto;
+	// 			max-width: var(--container);
+	// 			justify-content: center;
+	// 			align-items: flex-start;
+	// 			flex-wrap: wrap;
+	// 			// flex-direction: column;
+	// 			position: relative;
+	// 			li {
+	// 				a {
+	// 					padding: 15px 15px;
+	// 					color: var(--color-main);
+	// 					// font-size: 30px;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	// #{$self}__bars {
+	// 	// 	transform: scale(0);
+	// 	// }
+	// 	// #{$self}__nav {
+	// 	// 	transform: translateY(-200%);
+	// 	// 	opacity: 0;
+	// 	// }
+	// }
+
+	&.open {
+		overflow: auto;
+		height: auto;
+
+		.mainnav {
+			transform: translateY(0%);
+			opacity: 1;
+			visibility: visible;
+			background: $color_main;
+			ul {
+				justify-content: space-evenly;
+			}
+			ul > li > a {
+				color: #fff;
+				// padding: 30px 15px;
+				&:hover {
+					opacity: 1;
+					background: darken($color: $color_main, $amount: 3);
+				}
+			}
+		}
+		#{$self}__bars {
+			background: $color_main;
+			color: #fff;
+			&:hover {
+				background: darken($color: $color_main, $amount: 3);
+			}
+		}
+	}
+
+	&.open {
+		// @media screen and (max-width: 900px) {
+			overflow: auto;
+			height: auto;
+
+			.mainnav {
+				transform: translateY(0%);
+				opacity: 1;
+				visibility: visible;
+				background: $color_main;
+				ul {
+					justify-content: space-evenly;
+				}
+				ul > li > a {
+					color: #fff;
+					// padding: 30px 15px;
+					&:hover {
+						opacity: 1;
+						background: darken($color: $color_main, $amount: 3);
+					}
+				}
+			}
+			#{$self}__bars {
+				background: $color_main;
+				color: #fff;
+				&:hover {
+					background: darken($color: $color_main, $amount: 3);
+				}
+			}
+		// }
 	}
 }
 

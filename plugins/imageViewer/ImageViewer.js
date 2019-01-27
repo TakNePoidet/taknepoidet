@@ -101,7 +101,12 @@ ImageViewer.prototype = {
 
 				closeSwipe = {
 					left: self.curImgLeft,
-					top: self.curImgTop
+					top: self.curImgTop,
+
+					end: {
+						left: self.curImgLeft,
+						top: self.curImgTop
+					}
 				}
 			},
 			onMove(e, position) {
@@ -154,13 +159,18 @@ ImageViewer.prototype = {
 					x: left,
 					y: top
 				}
+
+				closeSwipe.end = {
+					left: left,
+					top: top
+				}
 			},
-			onEnd(e, position) {
+			onEnd(e) {
 				if (zooming) return
 
 				if (viewer.zoomValue !== 100) return
-				let newTop = this.curImgTop + position.dy
-				if (Math.abs(newTop - closeSwipe.top) < 200) {
+
+				if (Math.abs(closeSwipe.end.top - closeSwipe.top) < 200) {
 					let _ratio = this.imgWidth / viewer.imageDim.w
 					viewer.currentImg.style.transform = `translate3d(${
 						closeSwipe.left
@@ -175,6 +185,9 @@ ImageViewer.prototype = {
 					container.style.background = `rgb(0,0,0)`
 					viewer.currentImg.style.opacity = 1
 				} else {
+					closeSwipe = {}
+					container.style.background = `rgb(0,0,0)`
+					viewer.currentImg.style.opacity = 1
 					viewer._close()
 				}
 			},
@@ -502,12 +515,17 @@ ImageViewer.defaults = {
 }
 
 function Factory(options) {
-	var imageViewHtml =
-		'<div class="image-viewer-loader"></div><div class="image-viewer-image-view"><div class="image-viewer-image-wrap"></div><div class="image-viewer-close"></div></div>'
-	var container = document.createElement('div')
-	container.id = 'image-viewer-container'
-	container.innerHTML = imageViewHtml
-	document.body.appendChild(container)
+	let container = null
+	if (document.getElementById('image-viewer-container') === null) {
+		var imageViewHtml =
+			'<div class="image-viewer-loader"></div><div class="image-viewer-image-view"><div class="image-viewer-image-wrap"></div><div class="image-viewer-close"></div></div>'
+		container = document.createElement('div')
+		container.id = 'image-viewer-container'
+		container.innerHTML = imageViewHtml
+		document.body.appendChild(container)
+	} else {
+		container = document.getElementById('image-viewer-container')
+	}
 	var viewer = new ImageViewer(container, options)
 	viewer._init()
 	return viewer

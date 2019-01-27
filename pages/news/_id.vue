@@ -98,11 +98,6 @@ export default {
 	created() {
 		this.title = `${this.$store.state.lang.news.create} ${this.datePost}`
 	},
-
-	mounted() {
-		if (process.browser) {
-		}
-	},
 	methods: {
 		formatedTextFilter: function(value) {
 			if (!value) return ''

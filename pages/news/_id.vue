@@ -6,14 +6,12 @@
 					<p v-html="formatedText"/>
 				</div>
 				<div ref="gallery" class="news-single-page__gallery">
-					<a
+					<img
 						v-for="(photo, key) in photos"
 						:key="key"
-						:href="$store.state.storage + '/images/news/' + photo.original"
-						target="_blank"
+						:src="$store.state.storage + '/images/news/' + photo.standart"
+						@click="InstallImageViewer($store.state.storage + '/images/news/' + photo.original)"
 					>
-						<img :src="$store.state.storage + '/images/news/' + photo.standart">
-					</a>
 				</div>
 
 				<i>{{ $store.state.lang.news.create }} {{ datePost }}</i>
@@ -74,7 +72,8 @@ export default {
 	},
 	data() {
 		return {
-			title: ''
+			title: '',
+			imageViewer: null
 		}
 	},
 
@@ -99,6 +98,11 @@ export default {
 	created() {
 		this.title = `${this.$store.state.lang.news.create} ${this.datePost}`
 	},
+
+	mounted() {
+		if (process.browser) {
+		}
+	},
 	methods: {
 		formatedTextFilter: function(value) {
 			if (!value) return ''
@@ -114,6 +118,11 @@ export default {
 			}
 
 			return value
+		},
+
+		InstallImageViewer(link) {
+			let ImageViewer = new window.ImageViewer()
+			ImageViewer.show(link)
 		}
 	}
 }

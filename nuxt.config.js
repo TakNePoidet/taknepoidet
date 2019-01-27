@@ -55,7 +55,8 @@ module.exports = {
 		'~plugins/init',
 		'~plugins/taknepoidet',
 		{ src: '~/plugins/SwipeSlider', ssr: false },
-		{ src: '~/plugins/Device', ssr: false }
+		{ src: '~/plugins/Device', ssr: false },
+		{ src: '~/plugins/imageViewer/index', ssr: false }
 	],
 	cache: true,
 	/*

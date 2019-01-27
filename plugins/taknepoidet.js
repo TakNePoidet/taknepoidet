@@ -1,4 +1,5 @@
 import Vue from 'vue'
+// import ImageViewer from './imageViewer'
 // import '@babel/polyfill'
 if (process.browser) {
 	// window.addEventListener('load', () => {

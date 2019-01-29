@@ -40,6 +40,11 @@ export default async function({
 	if (typeof app.$cookiz.get('theme') !== 'undefined') {
 		theme = app.$cookiz.get('theme')
 	}
+	console.log(
+		app.$cookiz.get('theme'),
+		typeof app.$cookiz.get('theme') != 'undefined',
+		theme
+	)
 	if (state.theme != theme) {
 		dispatch('setThemes', theme)
 	}

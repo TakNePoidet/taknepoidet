@@ -97,7 +97,6 @@ const actions = {
 		}
 
 		if (
-			typeof this.$cookiz.get('theme') !== 'undefined' &&
 			this.$cookiz.get('theme') !== theme
 		) {
 			cookies.set('theme', theme, {

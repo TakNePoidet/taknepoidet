@@ -1,0 +1,126 @@
+$MinWidth: 300px;
+$MoxWidth: 1000px;
+$body-primary: #ffffff;
+$body-secondary: #f1f1f1;
+
+// Шапка
+$header-primary: #ffffff;
+$header-secondary: #f1f1f1;
+$header-primary-inversion: #262e58;
+$header-secondary-inversion: #262e58;
+$header-primary-inversion-hover: darken(
+	$color: $header-primary-inversion,
+	$amount: 5
+);
+$header-secondary-inversion-hover: darken(
+	$color: $header-primary-inversion,
+	$amount: 5
+);
+
+// Навигация
+$nav-background: #262e58;
+$nav-background-hover: darken(
+	$color: $nav-background,
+	$amount: 3
+);
+$nav-color: #ffffff;
+// Нагинация
+$pagination-color: #262e58;
+$pagination-color-active: #ffffff;
+$pagination-background-active: #262e58;
+
+$breakpoints_height: 500;
+$color-main: #262e58;
+
+// текст
+$text-primary: #212529;
+$title-primary: #262e58;
+$text-social-networks: $text-primary;
+$container: '1140px';
+$min-width: 300px;
+$home-section-background: #262e58;
+
+// Лединг
+$landing-background: #fff57e;
+$landing-color: #000000;
+$landing-title: #000000;
+$landing-more: #000000;
+
+:root {
+	--variables: 'flex';
+
+
+	// Главный цвет
+	--color-main: #{$color-main};
+
+	// body
+	--body-primary: #{$body-primary};
+	--body-secondary: #{$body-secondary};
+
+	// текст
+	--text-primary: #{$text-primary};
+	--title-primary: #{$title-primary};
+	--text-social-networks: #{$text-social-networks};
+	//Шапка
+	--header-primary: #{$header-primary};
+	--header-secondary: #{$header-secondary};
+	--header-primary-inversion-hover: #{$header-primary-inversion-hover};
+	--header-primary-inversion: #{$header-primary-inversion};
+	--header-secondary-inversion: #{$header-secondary-inversion};
+	--header-secondary-inversion-hover: #{$header-secondary-inversion-hover};
+	// Навигация
+	--nav-background: #{$nav-background};
+	--nav-background-hover: #{$nav-background-hover};
+	--nav-color: #{$nav-color};
+	// Нагинация
+	--pagination-color: #{$pagination-color};
+	--pagination-color-active: #{$pagination-color-active};
+	--pagination-background-active: #{$pagination-background-active};
+
+	--container: #{$container};
+	--min-width: #{$min-width};
+	--home-section-background: #{$home-section-background};
+
+	// Лединг
+	--landing-background: #{$landing-background};
+	--landing-color: #{$landing-background};
+	--landing-title: #{$landing-title};
+	--landing-more: #{$landing-more};
+
+
+}
+
+html.themes-dark {
+	--body-primary: #000000;
+	--body-secondary: #111111;
+
+	// Шапка
+	--header-primary: #000000;
+	--header-primary-inversion: #ffffff;
+	--header-primary-inversion-hover: #333333;
+
+	// Навигация
+	--nav-background: #333333;
+	--nav-background-hover: #{lighten(#333333, 5)};
+	--nav-color: #ffffff;
+
+	// Нагинация
+	--pagination-color: #333333;
+	--pagination-color-active: #bfbfbf;
+	--pagination-background-active: #333333;
+
+	--color-main: #ffffff;
+
+	// текст
+	--text-primary: #bfbfbf;
+	--title-primary: #ffffff;
+	--text-social-networks: #bfbfbf;
+
+	// Лединг
+	--landing-background: #111111;
+	--landing-color: #ffffff;
+	--landing-title: #ffffff;
+	--landing-more: #ffffff;
+
+	--home-section-background: #000000;
+}

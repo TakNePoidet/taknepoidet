@@ -22,16 +22,17 @@
 	}
 }
 
-
 .news-all-list {
 	display: block;
 	padding: 30px 0;
-	margin:  auto;
+	margin: auto;
 	font-size: 20px;
 	width: 200px;
-	color: #000;
+	color: #{$text-primary};
+	color: var(--text-primary);
 	text-align: center;
 	&:hover {
-		color: #000;
+		color: #{$text-primary};
+		color: var(--text-primary);
 	}
 }

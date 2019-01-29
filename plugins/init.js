@@ -35,4 +35,12 @@ export default async function({
 	if (state.locale != locale) {
 		dispatch('setLocale', locale)
 	}
+
+	let theme = 'light'
+	if (typeof app.$cookiz.get('theme') !== 'undefined') {
+		theme = app.$cookiz.get('theme')
+	}
+	if (state.theme != theme) {
+		dispatch('setThemes', theme)
+	}
 }

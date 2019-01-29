@@ -91,10 +91,10 @@ module.exports = {
 	build: {
 		extractCSS: true,
 		postcss: [
-			require('postcss-css-variables')(),
-			require('autoprefixer')({
-				browsers: ['last 2 versions', 'ie 10-11', 'Firefox > 20']
-			})
+			// require('postcss-css-variables')(),
+			// require('autoprefixer')({
+			// 	browsers: ['last 2 versions', 'ie 10-11', 'Firefox > 20']
+			// })
 		],
 
 		filenames: {

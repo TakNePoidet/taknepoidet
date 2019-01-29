@@ -1,12 +1,12 @@
 <template>
 	<header :class="[open ? 'open' : '', fixed ? 'fixed' : '']" class="header">
 		<div class="header__wrap">
-			<nuxt-link :to="backLink" class="header__prew">
+			<nuxt-link :to="backLink" class="header__prew" @click="open = !open">
 				<i class="fas fa-arrow-left"/>
 			</nuxt-link>
 
 			<div class="header__logo">
-				<nuxt-link to="/">
+				<nuxt-link to="/" @click="open = !open">
 					<app-logo/>
 				</nuxt-link>
 			</div>

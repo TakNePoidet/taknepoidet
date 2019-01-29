@@ -13,11 +13,13 @@ const state = {
 	header: null,
 	social_networks: [],
 	project: [],
-	landing: []
+	landing: [],
+	theme: 'light'
 }
 
 const getters = {
 	getLocale: state => state.locale,
+	getThemes: state => state.theme,
 	getLocaleText: state => val => {
 		let arr = state.lang
 		for (let i of val.split('.')) {
@@ -45,6 +47,9 @@ const mutations = {
 	},
 	setHeader(state, header) {
 		state.header = header
+	},
+	setThemes(state, theme) {
+		state.theme = theme
 	}
 }
 
@@ -76,6 +81,26 @@ const actions = {
 			this.$cookiz.get('locale') !== lang
 		) {
 			cookies.set('locale', lang, {
+				path: '/',
+				maxAge: 60 * 60 * 24 * 7
+			})
+		}
+	},
+
+	setThemes({ state, commit }, theme) {
+		commit('setThemes', theme)
+		let cookies
+		if (process.browser) {
+			cookies = this.$cookiz
+		} else {
+			cookies = this.$cookiz
+		}
+
+		if (
+			typeof this.$cookiz.get('theme') !== 'undefined' &&
+			this.$cookiz.get('theme') !== theme
+		) {
+			cookies.set('theme', theme, {
 				path: '/',
 				maxAge: 60 * 60 * 24 * 7
 			})

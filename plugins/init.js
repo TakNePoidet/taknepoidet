@@ -43,16 +43,21 @@ export default async function({
 	if (state.theme != theme) {
 		dispatch('setThemes', theme)
 	}
+	let UserAgent
+	if (process.browser) {
+		UserAgent = navigator.userAgent
+	} else {
+		UserAgent = req.get('User-Agent')
+	}
 
-	if (GetIEVersion(req)) {
+	if (GetIEVersion(UserAgent)) {
 		redirect('/ie')
 	}
 }
 
-function GetIEVersion(req) {
-	var sAgent = req.get('User-Agent')
-	var Idx = sAgent.indexOf('MSIE')
+function GetIEVersion(UserAgent) {
+	var Idx = UserAgent.indexOf('MSIE')
 	if (Idx > 0) return true
-	else if (!!sAgent.match(/Trident\/7\./)) return true
+	else if (!!UserAgent.match(/Trident\/7\./)) return true
 	else return false
 }

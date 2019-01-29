@@ -47,8 +47,7 @@ $landing-title: #000000;
 $landing-more: #000000;
 
 :root {
-	--variables: 'flex';
-
+	--variables: flex;
 
 	// Главный цвет
 	--color-main: #{$color-main};
@@ -86,8 +85,6 @@ $landing-more: #000000;
 	--landing-color: #{$landing-background};
 	--landing-title: #{$landing-title};
 	--landing-more: #{$landing-more};
-
-
 }
 
 html.themes-dark {

@@ -25,6 +25,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
 export default {
+	scrollToTop: true,
 	validate({ params }) {
 		return !isNaN(+params.id)
 	},

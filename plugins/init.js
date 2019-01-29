@@ -40,12 +40,19 @@ export default async function({
 	if (typeof app.$cookiz.get('theme') !== 'undefined') {
 		theme = app.$cookiz.get('theme')
 	}
-	console.log(
-		app.$cookiz.get('theme'),
-		typeof app.$cookiz.get('theme') != 'undefined',
-		theme
-	)
 	if (state.theme != theme) {
 		dispatch('setThemes', theme)
 	}
+
+	if (GetIEVersion(req)) {
+		redirect('/ie')
+	}
+}
+
+function GetIEVersion(req) {
+	var sAgent = req.get('User-Agent')
+	var Idx = sAgent.indexOf('MSIE')
+	if (Idx > 0) return true
+	else if (!!sAgent.match(/Trident\/7\./)) return true
+	else return false
 }

@@ -21,6 +21,9 @@ async function start() {
 		await builder.build()
 	}
 
+	app.get('/ie', (req, res, next) => {
+		res.send('Ты застрял в прошлом,пора двигаться дальше')
+	})
 	// Give nuxt middleware to express
 	app.use(nuxt.render)
 

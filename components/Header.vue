@@ -17,8 +17,8 @@
 		<nav class="mainnav">
 			<ul>
 				<li v-for="link in linksFilter" :key="link.key">
-					<nuxt-link v-if="!link.new_window" :to="link.path" @click="open = false">{{ link.title }}</nuxt-link>
-					<a v-else :href="link.path" target="_blank" @click="open = false">{{ link.title }}</a>
+					<nuxt-link v-if="!link.new_window" :to="link.path" @click="close">{{ link.title }}</nuxt-link>
+					<a v-else :href="link.path" target="_blank" @click="close">{{ link.title }}</a>
 				</li>
 			</ul>
 		</nav>
@@ -71,6 +71,7 @@ export default {
 		...mapState(['baseurl']),
 
 		backLink() {
+			this.close()
 			let path = this.$nuxt._route.path
 				.split('/')
 				.filter(el => el.length > 0)
@@ -94,6 +95,13 @@ export default {
 			return this.links.filter(item => {
 				return item.key !== this.currentPath
 			})
+		}
+	},
+
+	methods: {
+		close() {
+			console.log(1)
+			this.open = false
 		}
 	}
 }

@@ -12,8 +12,8 @@ $header-primary-inversion-hover: darken(
 	$color: $header-primary-inversion,
 	$amount: 5
 );
-$header-secondary-inversion-hover: darken(
-	$color: $header-primary-inversion,
+$header-secondary-hover: darken(
+	$color: $header-secondary,
 	$amount: 5
 );
 
@@ -66,7 +66,7 @@ $landing-more: #000000;
 	--header-primary-inversion-hover: #{$header-primary-inversion-hover};
 	--header-primary-inversion: #{$header-primary-inversion};
 	--header-secondary-inversion: #{$header-secondary-inversion};
-	--header-secondary-inversion-hover: #{$header-secondary-inversion-hover};
+	--header-secondary-hover: #{$header-secondary-hover};
 	// Навигация
 	--nav-background: #{$nav-background};
 	--nav-background-hover: #{$nav-background-hover};
@@ -95,7 +95,7 @@ html.themes-dark {
 	--header-primary: #000000;
 	--header-primary-inversion: #ffffff;
 	--header-primary-inversion-hover: #333333;
-
+	--header-secondary-hover: #333333;
 	// Навигация
 	--nav-background: #333333;
 	--nav-background-hover: #{lighten(#333333, 5)};

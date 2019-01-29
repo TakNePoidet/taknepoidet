@@ -368,8 +368,8 @@
 		cursor: pointer;
 		&:hover {
 			text-decoration: none;
-			background: #{$header-primary-inversion-hover};
-			background: var(--header-primary-inversion-hover);
+			background: #{$header-secondary-hover};
+			background: var(--header-secondary-hover);
 		}
 
 		@media screen and (max-width: 500px) {

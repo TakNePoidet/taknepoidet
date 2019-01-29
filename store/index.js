@@ -96,9 +96,7 @@ const actions = {
 			cookies = this.$cookiz
 		}
 
-		if (
-			this.$cookiz.get('theme') !== theme
-		) {
+		if (this.$cookiz.get('theme') !== theme) {
 			cookies.set('theme', theme, {
 				path: '/',
 				maxAge: 60 * 60 * 24 * 7

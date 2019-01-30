@@ -12,7 +12,7 @@
 						:src="$store.state.storage + '/images/news/' + photo.standart.src"
 						:width="`${photo.standart.width}px`"
 						:height="`${photo.standart.height}px`"
-						@click="InstallImageViewer($store.state.storage + '/images/news/' + photo.original)"
+						@click="InstallImageViewer($store.state.storage + '/images/news/' + photo.original.src)"
 					>
 				</div>
 

@@ -5,9 +5,11 @@
 	>
 		<div class="news__cover">
 			<img
-				:src="$store.state.storage + '/images/news/' + data.cover[0]"
+				:src="$store.state.storage + '/images/news/' + data.cover.normal.src"
 				:alt="data.content"
-				:srcset="$store.state.storage + '/images/news/' + data.cover[1] + ' 2x'"
+				:srcset="$store.state.storage + '/images/news/' + data.cover.retina.src + ' 2x'"
+				:width="`${data.cover.normal.width}px`"
+				:height="`${data.cover.normal.height}px`"
 			>
 		</div>
 		<div class="news__content">

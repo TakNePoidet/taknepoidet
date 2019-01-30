@@ -139,7 +139,7 @@
 			display: block;
 			text-decoration: none;
 			color: $text-social-networks;
-			color: var(--text-social-networks)
+			color: var(--text-social-networks);
 		}
 		&__logo {
 			position: relative;
@@ -207,6 +207,13 @@
 				}
 			}
 		}
+	}
+
+	.section-social-networks__top {
+		vertical-align: top;
+	}
+	.section-social-networks__bottom {
+		vertical-align: bottom;
 	}
 }
 

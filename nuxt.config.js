@@ -1,5 +1,28 @@
 const pkg = require('./package')
 
+const scrollBehavior = function(to, from, savedPosition) {
+	let position = false
+
+	if (to.matched.length < 2) {
+		position = { x: 0, y: 0 }
+	} else if (to.matched.some(r => r.components.default.options.scrollToTop)) {
+		position = { x: 0, y: 0 }
+	}
+
+	if (savedPosition) {
+		position = savedPosition
+	}
+
+	return new Promise(resolve => {
+		window.$nuxt.$once('triggerScroll', () => {
+			if (to.hash && document.querySelector(to.hash)) {
+				position = { selector: to.hash }
+			}
+			resolve(position)
+		})
+	})
+}
+
 module.exports = {
 	mode: 'universal',
 
@@ -58,6 +81,10 @@ module.exports = {
 		{ src: '~/plugins/Device', ssr: false },
 		{ src: '~/plugins/imageViewer/index', ssr: false }
 	],
+	router: {
+		scrollBehavior
+	},
+
 	cache: true,
 	/*
 	 ** Nuxt.js modules

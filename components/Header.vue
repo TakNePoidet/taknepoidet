@@ -100,7 +100,6 @@ export default {
 
 	methods: {
 		close() {
-			console.log(1)
 			this.open = false
 		}
 	}

@@ -22,7 +22,7 @@ async function start() {
 	}
 
 	app.get('/ie', (req, res, next) => {
-		res.send('Ты застрял в прошлом, пора двигаться дальше')
+		res.send('Извини, но ты застрял в прошлом, пора что-то менять')
 	})
 	// Give nuxt middleware to express
 	app.use(nuxt.render)

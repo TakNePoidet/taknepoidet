@@ -83,20 +83,18 @@ module.exports = {
 	 */
 	modules: [
 		// Doc: https://github.com/nuxt-community/axios-module#usage
+		'@nuxtjs/axios',
+		'@babel/polyfill',
 		[
-			'@nuxtjs/axios',
-			'@babel/polyfill',
-			[
-				'@nuxtjs/yandex-metrika',
-				{
-					id: '39689345',
-					webvisor: true,
-					clickmap: true,
-					// useCDN:false,
-					trackLinks: true
-					// accurateTrackBounce:true,
-				}
-			]
+			'@nuxtjs/yandex-metrika',
+			{
+				id: '39689345',
+				webvisor: true,
+				clickmap: true,
+				// useCDN:false,
+				trackLinks: true
+				// accurateTrackBounce:true,
+			}
 		],
 		['cookie-universal-nuxt', { alias: 'cookiz' }]
 	],

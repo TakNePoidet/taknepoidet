@@ -15,7 +15,9 @@ export default async function({
 	} else {
 		language = req.headers['accept-language']
 	}
-	language = language.substr(0, 2).toLowerCase()
+	if (language) {
+		language = language.substr(0, 2).toLowerCase()
+	}
 
 	let locale
 	if (

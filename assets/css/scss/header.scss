@@ -39,7 +39,7 @@
 		cursor: pointer;
 		&:hover {
 			background: $nav-background-hover;
-					background: var(--nav-background-hover);
+			background: var(--nav-background-hover);
 		}
 	}
 
@@ -56,23 +56,16 @@
 			display: block;
 			// height: 60px;
 			&:hover {
-				.b {
-					fill: lighten($color: $color_main, $amount: 5);
-				}
+				fill: lighten($color: $color_main, $amount: 5);
 			}
 		}
 		svg {
 			pointer-events: none;
 			max-height: 60px;
 			width: 100%;
-			.a {
-				fill: transparent;
-			}
-			.b {
-				fill: #{$header-primary-inversion};
-				fill: var(--header-primary-inversion);
-				transition: all 0.2s;
-			}
+			fill: #{$header-primary-inversion};
+			fill: var(--header-primary-inversion);
+			transition: all 0.2s;
 		}
 	}
 	.mainnav {
@@ -344,14 +337,9 @@
 			pointer-events: none;
 			max-height: 60px;
 			width: 100%;
-			.a {
-				fill: transparent;
-			}
-			.b {
-				fill: #{$header-primary-inversion};
-				fill: var(--header-primary-inversion);
-				transition: all 0.2s;
-			}
+			fill: #{$header-primary-inversion};
+			fill: var(--header-primary-inversion);
+			transition: all 0.2s;
 		}
 	}
 	#{$self}__bars,

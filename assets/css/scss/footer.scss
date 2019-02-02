@@ -30,7 +30,11 @@
 		display: none;
 		display: var(--variables);
 		justify-content: center;
+		margin: 0px auto;
+		overflow: hidden;
 		margin-top: 15px;
+		width: 25px !important;
+		height: 25px !important;
 		button {
 			margin: 5px 5px;
 

@@ -17,6 +17,34 @@
 				</div>
 
 				<i>{{ $store.state.lang.news.create }} {{ datePost }}</i>
+
+				<div
+					v-if="prev || next"
+					:class="['news-single-page__other', ((prev && !next) ? 'news-single-page__not-next' : '')]"
+				>
+					<nuxt-link v-if="next" :to="`/news/${next.id}`" class="news-single-page__next">
+						<img
+							:src="$store.state.storage + '/images/news/' + next.cover.min.src"
+							:srcset="$store.state.storage + '/images/news/' + next.cover.normal.src + ' 2x'"
+						>
+						<div>
+							<i class="fas fa-arrow-left"/>
+							{{ $store.state.lang.news.prev }}
+						</div>
+					</nuxt-link>
+					<nuxt-link v-if="prev" :to="`/news/${prev.id}`" class="news-single-page__prev">
+						<div>
+							{{ $store.state.lang.news.next }}
+							<i class="fas fa-arrow-right"/>
+						</div>
+						<img
+							:src="$store.state.storage + '/images/news/' + prev.cover.min.src"
+							:srcset="$store.state.storage + '/images/news/' + prev.cover.normal.src + ' 2x'"
+							:width="`${prev.cover.min.width}px`"
+							:height="`${prev.cover.min.height}px`"
+						>
+					</nuxt-link>
+				</div>
 			</article>
 		</div>
 	</main>
@@ -67,6 +95,8 @@ export default {
 			}
 
 			return {
+				next: false,
+				prev: false,
 				...data.response
 			}
 		} catch (error) {
@@ -76,7 +106,9 @@ export default {
 	data() {
 		return {
 			title: '',
-			imageViewer: null
+			imageViewer: null,
+			next: false,
+			prev: false
 		}
 	},
 

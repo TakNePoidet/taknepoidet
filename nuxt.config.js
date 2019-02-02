@@ -84,7 +84,7 @@ module.exports = {
 	modules: [
 		// Doc: https://github.com/nuxt-community/axios-module#usage
 		'@nuxtjs/axios',
-		'@babel/polyfill',
+		// '@babel/polyfill',
 		[
 			'@nuxtjs/yandex-metrika',
 			{

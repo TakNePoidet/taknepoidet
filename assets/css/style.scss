@@ -194,6 +194,7 @@ main {
 	}
 }
 .body-pages-standart {
+	// padding-top: 90px;
 	.page-title {
 		display: block;
 		text-align: center;
@@ -217,6 +218,10 @@ main {
 		max-width: var(--container);
 		margin: 0px auto;
 	}
+}
+
+.body-pages-standart.header-fixed {
+	padding-top: 90px;
 }
 
 main {

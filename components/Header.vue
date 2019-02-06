@@ -1,5 +1,5 @@
 <template>
-	<header :class="[open ? 'open' : '', fixed ? 'fixed' : '']" class="header">
+	<header :class="[open ? 'open' : '', fixed ? 'fixed' : '', show ? 'show' : 'hide']" class="header">
 		<div class="header__wrap">
 			<nuxt-link :to="backLink" class="header__prew" @click="open = !open">
 				<i class="fas fa-arrow-left"/>
@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<nav class="mainnav">
-			<ul>
+			<ul ref="mainnav" :class="{scroll: scrollMainnav}">
 				<li v-for="link in linksFilter" :key="link.key">
 					<nuxt-link v-if="!link.new_window" :to="link.path" @click="close">{{ link.title }}</nuxt-link>
 					<a v-else :href="link.path" target="_blank" @click="close">{{ link.title }}</a>
@@ -35,7 +35,10 @@ export default {
 		return {
 			open: false,
 			fixed: false,
-
+			show: false,
+			transition: false,
+			scroll: 0,
+			scrollMainnav: false,
 			links: [
 				{
 					key: 'about',
@@ -97,10 +100,83 @@ export default {
 			})
 		}
 	},
+	watch: {
+		open() {
+			this.$nextTick(function() {
+				this.isScrollMainnav()
+			})
+		}
+	},
+	mounted() {
+		if (process.browser) {
+			this.scroll = window.pageYOffset
+			window.addEventListener('scroll', this.windowScroll)
+			window.addEventListener('resize', this.windowResize)
+			this.$refs['mainnav'].addEventListener(
+				'mousewheel',
+				this.onScrollMainNav
+			)
 
+			this.onScrollMainNav()
+		}
+	},
+	beforeDestroy() {
+		if (process.browser) {
+			window.removeEventListener('scroll', this.windowScroll)
+			window.removeEventListener('resize', this.windowResize)
+			this.$refs['mainnav'].removeEventListener(
+				'mousewheel',
+				this.onScrollMainNav
+			)
+		}
+	},
 	methods: {
 		close() {
 			this.open = false
+		},
+
+		windowScroll() {
+			this.open = false
+			if (window.pageYOffset > 90) {
+				this.fixed = true
+				document.body.classList.add('header-fixed')
+			} else {
+				if (window.pageYOffset == 0) {
+					this.fixed = false
+					this.show = false
+					document.body.classList.remove('header-fixed')
+				}
+			}
+			if (Math.abs(window.pageYOffset - this.scroll) > 100) {
+				if (this.scroll > window.pageYOffset) {
+					this.show = true
+					this.transition = true
+				}
+				if (this.scroll < window.pageYOffset) {
+					this.show = false
+				}
+				this.scroll = window.pageYOffset
+			}
+		},
+		onScrollMainNav(e) {
+			if (e) {
+				e.preventDefault()
+				let evt = e.originalEvent
+				let position = this.$refs['mainnav'].scrollLeft
+				position += e.deltaY < 0 ? -120 : 120
+				this.$refs['mainnav'].scrollLeft = position
+			}
+		},
+		isScrollMainnav() {
+			let ul = this.$refs['mainnav']
+			if (ul.scrollWidth - ul.clientWidth > 0) {
+				this.scrollMainnav = true
+			} else {
+				this.scrollMainnav = false
+			}
+		},
+		windowResize() {
+			this.isScrollMainnav()
 		}
 	}
 }

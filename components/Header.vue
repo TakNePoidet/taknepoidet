@@ -91,7 +91,10 @@ export default {
 			if (typeof link === 'undefined') {
 				link = 'home'
 			}
-			this.resetHeader()
+			return link
+		},
+		currentLink() {
+			let link = this.$nuxt._route.path
 			return link
 		},
 
@@ -106,6 +109,12 @@ export default {
 			this.$nextTick(function() {
 				this.isScrollMainnav()
 			})
+		},
+		currentLink() {
+			this.resetHeader()
+		},
+		show() {
+			console.log('watch-show')
 		}
 	},
 	mounted() {
@@ -158,6 +167,10 @@ export default {
 				}
 				this.scroll = window.pageYOffset
 			}
+
+			if (this.scroll === 0) {
+				this.show = false
+			}
 		},
 		onScrollMainNav(e) {
 			if (e) {
@@ -183,6 +196,7 @@ export default {
 			this.open = false
 			this.fixed = false
 			this.show = false
+			console.info('resetHeader')
 		}
 	}
 }

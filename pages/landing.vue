@@ -2,16 +2,20 @@
 	<main>
 		<div class="section-landing">
 			<h2 class="section-title">{{ $store.state.lang.section.landing_list.title }}</h2>
-			<div ref="grid" class="grid">
+			<div ref="grid-landing" class="grid-landing">
 				<div
 					v-for="(item, key) in rand_landing()"
 					:key="item.key"
 					:class="[key > 3 ? 'wow' : '']"
-					class="grid-item bounceInUp"
+					class="grid-landing-item bounceInUp"
 				>
-					<div class="grid-item__title">{{ item.title[getLocale] }}</div>
-					<div class="grid-item__images">
-						<a :href="item.link" target="_blank" rel="nofollow">
+					<div class="grid-landing-item__title">{{ item.title[getLocale] }}</div>
+					<div class="grid-landing-item__images">
+						<a
+							:href="(item.link) ? item.link : `${$store.state.storage}/images/landing/full/${item.filename}@1x.jpg`"
+							target="_blank"
+							rel="nofollow"
+						>
 							<img
 								:src="`${$store.state.storage}/images/landing/normal/${item.filename}@1x.jpg`"
 								:alt="item.title[getLocale]"
@@ -23,17 +27,7 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="madeinbananstydio">
-				<a
-					class="madeinbananstydio__link"
-					rel="nofollow"
-					href="https://www.instagram.com/studiya.banan/"
-				>
-					<div class="madeinbananstydio__text">{{ $store.state.lang.page.landing.banan }}</div>
-					<div class="madeinbananstydio__logo"/>
-				</a>
-			</div>
+			<made-in-banan-stydio/>
 		</div>
 	</main>
 </template>
@@ -41,6 +35,7 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapGetters } from 'vuex'
+import MadeInBananStydio from '~/components/MadeInBananStydio.vue'
 export default {
 	layout: 'landing',
 	head() {
@@ -59,7 +54,9 @@ export default {
 			}
 		}
 	},
-
+	components: {
+		MadeInBananStydio
+	},
 	async asyncData({ params, store }) {
 		try {
 			let { data } = await axios.get(`${store.state.api}methods/landing`)
@@ -85,8 +82,8 @@ export default {
 	mounted() {
 		if (process.browser) {
 			var Masonry = require('masonry-layout')
-			let masonry = new Masonry(this.$refs.grid, {
-				itemSelector: '.grid-item',
+			let masonry = new Masonry(this.$refs['grid-landing'], {
+				itemSelector: '.grid-landing-item',
 				columnWidth: 350,
 				gutter: 30
 			})

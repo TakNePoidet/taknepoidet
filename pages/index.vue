@@ -58,7 +58,7 @@
 		<div id="news" class="section-news">
 			<h2 class="section-title">{{ $store.state.lang.section.news.title }}</h2>
 			<div v-if="news.length > 1" ref="news" class="news-container news-container--grid">
-				<news-min v-for="item in news" :key="item.id" :data="item" :animation="true" />
+				<news-min v-for="item in news" :key="item.id" :data="item" :animation="true"/>
 			</div>
 			<nuxt-link
 				v-if="news.length > 1"
@@ -115,18 +115,18 @@
 		<div id="project" class="project">
 			<h2 class="section-title">{{ $store.state.lang.section.project.title }}</h2>
 			<div class="project__wrap">
-				<div v-for="item of project" :key="item.link" class="project__item wow flipInX">
-					<a :href="item.link" target="_blank">
-						<div class="project__images">
-							<img
-								:src="`${$store.state.storage}/images/projects/${item.images}.jpg`"
-								:srcset="`${$store.state.storage}/images/projects/${item.images}@2x.jpg 2x`"
-							>
-						</div>
-						<div class="project__name">{{ item.title[getLocale] }}</div>
-					</a>
-				</div>
+				<project-item
+					v-for="(item, key) of project"
+					:key="item.link"
+					:index="key + 1"
+					:data="item"
+					:animation="true"
+				/>
 			</div>
+			<nuxt-link
+				to="/project"
+				class="project-all-list"
+			>{{ $store.state.lang.section.landing_list.more }}</nuxt-link>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1501.37 30.818">
 				<g transform="translate(5277.37 6670)">
 					<path d="M0,30.64H0V0H1501L0,30.64Z" transform="translate(-3776 -6639.36) rotate(180)"/>
@@ -146,10 +146,12 @@ import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
 import NewsMin from '~/components/news-min.vue'
 import AppLogo from '~/components/AppLogo.vue'
+import ProjectItem from '~/components/ProjectItem.vue'
 export default {
 	components: {
 		NewsMin,
-		AppLogo
+		AppLogo,
+		ProjectItem
 	},
 	head() {
 		return {
@@ -175,6 +177,8 @@ export default {
 		let social_networks = data.social_networks
 		let landing = data.landing
 		let project = data.project
+			.sort((a, b) => Math.random() - 0.5)
+			.slice(0, 4)
 
 		let title = store.state.lang.page.index.title
 		let description = store.state.lang.page.index.description

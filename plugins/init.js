@@ -13,20 +13,24 @@ export default async function({
 			window.navigator.systemLanguage ||
 			window.navigator.userLanguage
 	} else {
-		language = req.headers['accept-language']
+		if (req) {
+			language = req.headers['accept-language']
+		} else {
+			language = 'ru'
+		}
 	}
 	if (language) {
 		language = language.substr(0, 2).toLowerCase()
 	}
-
 	let locale
 	if (
 		['ru', 'be', 'uk', 'ky', 'ab', 'mo', 'et', 'lv'].indexOf(language) != -1
 	) {
 		locale = 'ru'
 	} else {
-		locale = 'en'
+		locale = 'ru'
 	}
+
 	if (
 		typeof app.$cookiz.get('locale') !== 'undefined' &&
 		state.language.indexOf(app.$cookiz.get('locale')) != -1
@@ -49,7 +53,11 @@ export default async function({
 	if (process.browser) {
 		UserAgent = navigator.userAgent
 	} else {
-		UserAgent = req.get('User-Agent')
+		if (req) {
+			UserAgent = req.get('User-Agent')
+		} else {
+			UserAgent = ''
+		}
 	}
 
 	if (GetIEVersion(UserAgent)) {

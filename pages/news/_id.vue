@@ -3,7 +3,7 @@
 		<div class="section-news-page">
 			<article class="news-single-page">
 				<div class="news-single-page__content">
-					<p v-html="formatedText"/>
+					<p v-for="(paragraph, keyp) in formatedText" :key="keyp" v-html="paragraph"/>
 				</div>
 				<div ref="gallery" class="news-single-page__gallery">
 					<img
@@ -114,7 +114,9 @@ export default {
 
 	computed: {
 		formatedText() {
-			return this.formatedTextFilter(this.content)
+			let text = this.formatedTextFilter(this.content)
+
+			return text.split('\n')
 		},
 
 		datePost() {
@@ -137,13 +139,19 @@ export default {
 		formatedTextFilter: function(value) {
 			if (!value) return ''
 
-			if (value.length > 100) {
-				value = value.replace('\n', '<br>')
-				let regex = /\[((id|club)[0-9]*)\|([A-Za-zА-яа-я\s-.]+)\]/gm
+			if (value.length > 0) {
+				let regex = /(https?:\/\/|ftp:\/\/|www\.)(((?![.,?!;:()]*(\s|$))[^\s]){2,})/
 				value = value.replace(regex, (...matches) => {
-					return `<a target="_blank" href="//vk.com/${matches[1]}">${
-						matches[3]
+					return `<a target="_blank" href="${matches[0]}">${
+						matches[2]
 					}</a>`
+				})
+
+				regex = /\[((id|club)[0-9]*)\|([A-Za-zА-яа-я\s-.]+)\]/gm
+				value = value.replace(regex, (...matches) => {
+					return `<a target="_blank" href="https://vk.com/${
+						matches[1]
+					}">${matches[3]}</a>`
 				})
 			}
 

@@ -19,7 +19,7 @@
 	background: $landing-background;
 	background: var(--landing-background);
 	margin: auto;
-	.grid {
+	.grid-landing {
 		margin: 50px auto;
 		padding: 0px 15px;
 	}
@@ -27,7 +27,7 @@
 		fill: #{$body-secondary};
 		fill: var(--body-secondary);
 	}
-	.grid-item {
+	.grid-landing-item {
 		width: 350px;
 		img {
 			max-width: 100%;
@@ -47,7 +47,7 @@
 		}
 
 		&:hover {
-			.grid-item__images {
+			.grid-landing-item__images {
 				opacity: 0.9;
 				box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
 			}
@@ -179,21 +179,23 @@ body.body-landing-page {
 	}
 }
 .madeinbananstydio {
+	$self: &;
 	margin: 100px auto;
 	display: block;
 	justify-content: flex-end;
 	align-items: center;
+	text-align: center;
 	&__link {
 		color: $landing-color;
 		color: var(--landing-color);
-		display: flex;
+		display: inline-flex;
 		justify-content: center;
 		&:hover {
 			text-decoration: none !important;
 		}
 	}
 	&__logo {
-		background-image: url('~assets/css/images/banan.svg');
+		// background-image: url('~assets/css/images/banan.svg');
 		background-repeat: no-repeat;
 		width: 40px;
 		height: 30px;
@@ -201,10 +203,23 @@ body.body-landing-page {
 		display: inline-block;
 		cursor: pointer;
 		transition: transform ease-out 0.4s;
-		top: -6px;
+		// top: -6px;
 		position: relative;
 		&:focus {
 			transform: rotate(calc(360 * 5) deg);
+		}
+
+		svg {
+			width: 40px;
+		}
+
+		path {
+			fill: transparent;
+			&:nth-child(2),
+			&:nth-child(3) {
+				fill: #000000;
+				fill: var(--landing-color);
+			}
 		}
 	}
 	&__text {
@@ -229,20 +244,49 @@ body.body-landing-page {
 			transition: all ease-out 0.4s;
 		}
 	}
-	&:hover & {
-		&__logo {
-			background-position: 0px -30px;
-		}
-		&__text {
-			text-decoration: underline;
-			&:after {
-				width: 100%;
-			}
-		}
-		&__link {
+	&__link {
+		&:hover {
 			color: $landing-color;
 			color: var(--landing-color);
 			text-decoration: underline;
+			#{$self}__logo {
+				// background-position: 0px -30px;
+				path {
+					&:first-child {
+						fill: $color-banan;
+						fill: var(--color-banan);
+					}
+
+					&:nth-child(2),
+					&:nth-child(3) {
+						fill: $color-banan-stroke;
+						fill: var(--color-banan-stroke);
+					}
+				}
+			}
+			#{$self}__text {
+				text-decoration: underline;
+				&:after {
+					width: 100%;
+				}
+			}
+		}
+		&:focus {
+			#{$self}__logo {
+				path {
+					&:first-child {
+						fill: $color-banan;
+						fill: var(--color-banan);
+					}
+
+					&:nth-child(2),
+					&:nth-child(3) {
+						fill: $color-banan-stroke;
+						fill: var(--color-banan-stroke);
+					}
+				}
+				transform: rotate(360deg)
+			}
 		}
 	}
 }

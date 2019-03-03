@@ -1,4 +1,5 @@
 const pkg = require('./package')
+const axios = require('axios')
 
 const scrollBehavior = function(to, from, savedPosition) {
 	let position = false
@@ -146,6 +147,18 @@ module.exports = {
 					}
 				)
 			}
+		}
+	},
+	generate: {
+		routes() {
+			return axios
+				.get('https://api.taknepoidet.ru/methods/news?count=1000')
+				.then(res => {
+					console.log(res.data.items)
+					return res.data.response.items.map(news => {
+						return '/news/' + news.id
+					})
+				})
 		}
 	}
 }

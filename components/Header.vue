@@ -64,7 +64,7 @@ export default {
 				{
 					key: 'project',
 					title: this.$store.state.lang.header.projects,
-					path: '/#project'
+					path: '/project'
 				}
 			]
 		}
@@ -91,6 +91,7 @@ export default {
 			if (typeof link === 'undefined') {
 				link = 'home'
 			}
+			this.resetHeader()
 			return link
 		},
 
@@ -177,6 +178,11 @@ export default {
 		},
 		windowResize() {
 			this.isScrollMainnav()
+		},
+		resetHeader() {
+			this.open = false
+			this.fixed = false
+			this.show = false
 		}
 	}
 }

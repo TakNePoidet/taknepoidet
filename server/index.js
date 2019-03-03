@@ -22,7 +22,9 @@ async function start() {
 	}
 
 	app.get('/ie', (req, res, next) => {
-		res.send('Извини, но ты застрял в прошлом, пора что-то менять')
+		res.send(
+			'Извини, но ты застрял в прошлом, пора что-то менять. <a href="https://browser.yandex.ru">Yandex Browser</a>'
+		)
 	})
 	// Give nuxt middleware to express
 	app.use(nuxt.render)

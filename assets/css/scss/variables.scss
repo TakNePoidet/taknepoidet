@@ -47,6 +47,10 @@ $landing-color: #000000;
 $landing-title: #000000;
 $landing-more: #000000;
 
+// MadeInBananStydio
+$color-banan: #f9e000;
+$color-banan-stroke: #000000;
+
 :root {
 	--variables: flex;
 
@@ -83,9 +87,13 @@ $landing-more: #000000;
 
 	// Лединг
 	--landing-background: #{$landing-background};
-	--landing-color: #{$landing-background};
+	--landing-color: #{$landing-color};
 	--landing-title: #{$landing-title};
 	--landing-more: #{$landing-more};
+
+	// MadeInBananStydio
+	--color-banan: #{$color-banan};
+	--color-banan-stroke: #{color-banan-stroke};
 }
 
 html.themes-dark {

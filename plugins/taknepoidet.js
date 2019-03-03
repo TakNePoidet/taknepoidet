@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import anime from 'animejs'
 // import ImageViewer from './imageViewer'
 // import '@babel/polyfill'
 if (process.browser) {
@@ -38,20 +37,6 @@ if (process.browser) {
 			scrollContainer: null // optional scroll container selector, otherwise use window
 		})
 		wow.init()
-	})
-
-	const svgPath = document.querySelectorAll('#websiteClip')
-
-	const svgText = anime({
-		targets: svgPath,
-		loop: true,
-		direction: 'alternate',
-		strokeDashoffset: [anime.setDashoffset, 0],
-		easing: 'easeInOutSine',
-		duration: 700,
-		delay: (el, i) => {
-			return i * 500
-		}
 	})
 }
 

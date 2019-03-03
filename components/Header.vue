@@ -109,12 +109,6 @@ export default {
 			this.$nextTick(function() {
 				this.isScrollMainnav()
 			})
-		},
-		currentLink() {
-			this.resetHeader()
-		},
-		show() {
-			console.log('watch-show')
 		}
 	},
 	mounted() {

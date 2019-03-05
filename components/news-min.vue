@@ -29,7 +29,7 @@
 						class="news__content__text"
 					>
 						<p>{{ data.content | capitalize }}</p>
-						<nuxt-link :to="`/news/${data.slug}`" class="news__more">{{ $store.state.lang.news.more }}</nuxt-link>
+						<nuxt-link :to="`/news/${data.slug}/`" class="news__more">{{ $store.state.lang.news.more }}</nuxt-link>
 					</div>
 				</div>
 			</div>

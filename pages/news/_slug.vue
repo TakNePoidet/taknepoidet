@@ -24,7 +24,7 @@
 					v-if="prev || next"
 					:class="['news-single-page__other', ((prev && !next) ? 'news-single-page__not-next' : '')]"
 				>
-					<nuxt-link v-if="next" :to="`/news/${next.slug}`" class="news-single-page__next">
+					<nuxt-link v-if="next" :to="`/news/${next.slug}/`" class="news-single-page__next">
 						<img
 							:src="$store.state.storage + '/images/news/' + next.cover.min.src"
 							:srcset="$store.state.storage + '/images/news/' + next.cover.normal.src + ' 2x'"
@@ -34,7 +34,7 @@
 							{{ $store.state.lang.news.prev }}
 						</div>
 					</nuxt-link>
-					<nuxt-link v-if="prev" :to="`/news/${prev.slug}`" class="news-single-page__prev">
+					<nuxt-link v-if="prev" :to="`/news/${prev.slug}/`" class="news-single-page__prev">
 						<div>
 							{{ $store.state.lang.news.next }}
 							<i class="fas fa-arrow-right"/>
@@ -120,7 +120,8 @@ export default {
 				{
 					hid: 'og:url',
 					name: 'og:url',
-					content: this.$store.state.baseurl + 'news/' + this.slug
+					content:
+						this.$store.state.baseurl + 'news/' + this.slug + '/'
 				},
 				{
 					hid: 'author',

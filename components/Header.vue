@@ -48,7 +48,7 @@ export default {
 				{
 					key: 'news',
 					title: this.$store.state.lang.header.records,
-					path: '/news'
+					path: '/news/'
 				},
 				{
 					key: 'social',
@@ -58,13 +58,13 @@ export default {
 				{
 					key: 'landing',
 					title: this.$store.state.lang.header.landing_list,
-					path: '/landing',
+					path: '/landing/',
 					new_window: true
 				},
 				{
 					key: 'project',
 					title: this.$store.state.lang.header.projects,
-					path: '/project'
+					path: '/project/'
 				}
 			]
 		}

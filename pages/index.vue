@@ -62,7 +62,7 @@
 			</div>
 			<nuxt-link
 				v-if="news.length > 1"
-				to="/news"
+				to="/news/"
 				target="blank"
 				class="news-all-list"
 			>{{ $store.state.lang.section.landing_list.more }}</nuxt-link>
@@ -96,7 +96,7 @@
 				</div>
 
 				<a
-					href="/landing"
+					href="/landing/"
 					target="blank"
 					class="landing-crop-all"
 				>{{ $store.state.lang.section.landing_list.more }}</a>
@@ -124,7 +124,7 @@
 				/>
 			</div>
 			<nuxt-link
-				to="/project"
+				to="/project/"
 				class="project-all-list"
 			>{{ $store.state.lang.section.landing_list.more }}</nuxt-link>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1501.37 30.818">

@@ -28,7 +28,7 @@ export default async function({
 	) {
 		locale = 'ru'
 	} else {
-		locale = 'en'
+		locale = 'ru'
 	}
 
 	if (

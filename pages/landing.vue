@@ -42,16 +42,37 @@ export default {
 		return {
 			title: this.title,
 			meta: [
-				{ name: 'viewport', content: 'width=1200,user-scalable=yes' },
+				{
+					hid: 'viewport',
+					name: 'viewport',
+					content: 'width=1200,user-scalable=yes'
+				},
+				{
+					hid: 'og:title',
+					name: 'og:title',
+					content: this.title
+				},
 				{
 					hid: 'description',
 					name: 'description',
+					content: this.description
+				},
+				{
+					hid: 'og:description',
+					name: 'og:description',
 					content: this.description
 				}
 			],
 			bodyAttrs: {
 				class: 'body-landing-page'
-			}
+			},
+			link: [
+				{
+					hid: 'canonical',
+					rel: 'canonical',
+					href: this.$store.state.baseurl + 'landing/'
+				}
+			]
 		}
 	},
 	components: {

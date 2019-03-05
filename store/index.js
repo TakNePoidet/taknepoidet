@@ -57,7 +57,6 @@ const actions = {
 	async nuxtServerInit({ state, commit }, { isDev, env, req, redirect }) {},
 	async setLocale({ state, commit }, lang) {
 		// if (state.locale === lang) return true;
-
 		let locate
 		commit('setLocale', lang)
 		try {
@@ -76,10 +75,7 @@ const actions = {
 			cookies = this.$cookiz
 		}
 
-		if (
-			typeof this.$cookiz.get('locale') !== 'undefined' &&
-			this.$cookiz.get('locale') !== lang
-		) {
+		if (this.$cookiz.get('locale') !== lang) {
 			cookies.set('locale', lang, {
 				path: '/',
 				maxAge: 60 * 60 * 24 * 7

@@ -29,7 +29,7 @@
 						class="news__content__text"
 					>
 						<p>{{ data.content | capitalize }}</p>
-						<nuxt-link :to="`/news/${data.id}`" class="news__more">{{ $store.state.lang.news.more }}</nuxt-link>
+						<nuxt-link :to="`/news/${data.slug}`" class="news__more">{{ $store.state.lang.news.more }}</nuxt-link>
 					</div>
 				</div>
 			</div>
@@ -38,37 +38,11 @@
 </template>
 
 <script>
+import { getNewsDescription } from '~/assets/js/util/news'
+
 export default {
 	filters: {
-		capitalize: function(value) {
-			if (!value) return ''
-
-			if (value.length > 100) {
-				let rtrim = function rtrim(str, charlist) {
-					charlist = charlist.replace(
-						/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g,
-						'$1'
-					)
-					let re = new RegExp('[' + charlist + ']+$', 'g')
-					return str.replace(re, '')
-				}
-
-				value = value.replace('\n', ' ')
-				let regex = /\[((id|club)[0-9]*)\|([A-Za-zА-яа-я\s-.]+)\]/gm
-				value = value.replace(regex, (...matches) => {
-					return matches[3]
-				})
-
-				value = value.replace(/<\/?[^>]+>/gi, '')
-				value = value.substring(0, 100)
-				value = rtrim(value, '!,.-')
-
-				value = value.substring(0, value.lastIndexOf(' '))
-				value += '...'
-			}
-
-			return value
-		}
+		capitalize: getNewsDescription
 	},
 	props: {
 		data: {

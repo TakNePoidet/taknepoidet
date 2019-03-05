@@ -27,31 +27,35 @@ module.exports = {
 		meta: [
 			{ charset: 'utf-8' },
 			{
+				hid: 'viewport',
 				name: 'viewport',
 				content: 'width=device-width, initial-scale=1, shrink-to-fit=no'
 			},
 			{
-				hid: 'description',
-				name: 'description',
-				content:
-					'Моя личная страница. Зачем?! Потому что я так хочу. ¯_(ツ)_/¯'
-			},
-
-			{ name: 'og:image', content: '/images/cover_site.png' },
-			{ name: 'og:image:url', content: '/images/cover_site.png¯' },
-			{ name: 'og:image:secure_url', content: '/images/cover_site.png' },
-
-			{ name: 'theme-color', content: '#262E58' },
-			{ name: 'og:type', content: 'page' },
-			{ name: 'og:url', content: 'https://taknepoidet.ru' },
-			{
 				name: 'google-site-verification',
 				content: 'oKl2A6Zsi1pzXSzbqnbPSZi9j6cGTP-SVetE67RCd44'
-			}
+			},
+			{ name: 'theme-color', content: '#262E58' }
 		],
 
-		link: [{ rel: 'icon', type: 'image/png', href: '/images/favicon.png' }]
-		// script: [{ src: 'https://yastatic.net/browser-updater/v1/script.js' }]
+		link: [
+			{
+				hid: 'icon',
+				rel: 'icon',
+				type: 'image/png',
+				href: '/images/favicon.png'
+			},
+			{
+				hid: 'image_src',
+				rel: 'image_src',
+				href: '/images/cover-site.jpg'
+			},
+			{
+				hid: 'canonical',
+				rel: 'canonical',
+				href: 'https://taknepoidet.ru'
+			}
+		]
 	},
 
 	/*

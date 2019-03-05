@@ -21,8 +21,10 @@
 		"express": "^4.16.3",
 		"jarallax": "^1.10.6",
 		"masonry-layout": "^4.2.2",
+		"moment": "^2.24.0",
 		"nuxt": "^2.0.0",
 		"particles.js": "^2.0.0",
+		"unicode": "^11.0.1",
 		"vue-scrollto": "^2.13.0",
 		"wow.js": "^1.2.2"
 	},

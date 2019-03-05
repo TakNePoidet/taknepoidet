@@ -36,19 +36,56 @@ export default {
 			title: this.title,
 			meta: [
 				{
-					name: 'viewport',
-					content:
-						'width=device-width, initial-scale=1, shrink-to-fit=no'
+					hid: 'og:title',
+					name: 'og:title',
+					content: this.title
 				},
 				{
 					hid: 'description',
-					name: 'description'
-					// content: this.description
+					name: 'description',
+					content: this.$store.state.lang.page.index.description
+				},
+				{
+					hid: 'og:description',
+					name: 'og:description',
+					content: this.$store.state.lang.page.index.description
+				},
+				{
+					hid: 'og:image',
+					name: 'og:image',
+					content: '/images/cover-site-post.jpg'
+				},
+				{
+					hid: 'og:image:url',
+					name: 'og:image:url',
+					content: '/images/cover-site-post.jpg'
+				},
+				{
+					hid: 'og:image:secure_url',
+					name: 'og:image:secure_url',
+					content: '/images/cover-site-post.jpg'
+				},
+				{
+					hid: 'og:url',
+					name: 'og:url',
+					content: this.$store.state.baseurl + 'news/'
 				}
 			],
 			bodyAttrs: {
 				class: 'body-pages-standart'
-			}
+			},
+			link: [
+				{
+					hid: 'image_src',
+					rel: 'image_src',
+					href: '/images/cover-site-news.jpg'
+				},
+				{
+					hid: 'canonical',
+					rel: 'canonical',
+					href: this.$store.state.baseurl + 'news/'
+				}
+			]
 		}
 	},
 

@@ -58,10 +58,16 @@
 // import SwipeSlider from '~/plugins/SwipeSlider.js'
 import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
-import { formatedText, getNewsTitlePage } from '~/assets/js/util/news'
+import {
+	formatedText,
+	getNewsTitlePage,
+	getRandEmoii
+} from '~/assets/js/util/news'
 import slug from '~/assets/js/util/slug/index'
+import { createMetaTag, createLinkTag } from '~/assets/js/util/meta'
 import moment from 'moment'
 moment.locale()
+
 export default {
 	scrollToTop: true,
 	validate({ params }) {
@@ -73,90 +79,32 @@ export default {
 	head() {
 		return {
 			title: this.title,
+
 			meta: [
-				{
-					hid: 'og:title',
-					name: 'og:title',
-					content: this.title
-				},
-				{
-					hid: 'description',
-					name: 'description',
-					content: this.description
-				},
-				{
-					hid: 'og:description',
-					name: 'og:description',
-					content: this.description
-				},
-				{
-					hid: 'og:image',
-					name: 'og:image',
-					content: this.getStorageNews + this.coverArticleMeta.src
-				},
-				{
-					hid: 'og:image:url',
-					name: 'og:image:url',
-					content: this.getStorageNews + this.coverArticleMeta.src
-				},
-				{
-					hid: 'og:image:secure_url',
-					name: 'og:image:secure_url',
-					content: this.getStorageNews + this.coverArticleMeta.src
-				},
-				{
-					hid: 'og:image:width',
-					name: 'og:image:width',
-					content: this.coverArticleMeta.width
-				},
-				{
-					hid: 'og:image:height',
-					name: 'og:image:height',
-					content: this.coverArticleMeta.height
-				},
-				{
-					hid: 'og:type',
-					name: 'og:type',
-					content: 'article'
-				},
-				{
-					hid: 'og:url',
-					name: 'og:url',
-					content:
-						this.$store.state.baseurl + 'news/' + this.slug + '/'
-				},
-				{
-					hid: 'author',
-					name: 'author',
-					content: this.$store.state.lang.news.author
-				},
-				{
-					hid: 'article:author',
-					name: 'article:author',
-					content: this.$store.state.baseurl
-				},
-				{
-					hid: 'article:published_time',
-					name: 'article:published_time',
-					content: moment(this.created_at * 1000)
+				...createMetaTag(this, {
+					title: this.title,
+					description: this.description,
+					image: this.coverArticleMeta,
+					'og:type': 'article',
+					'og:url':
+						this.$store.state.baseurl + 'news/' + this.slug + '/',
+					author: this.$store.state.lang.news.author,
+					'article:author': this.$store.state.baseurl,
+					'article:published_time': moment(this.created_at * 1000)
 						.utc()
-						.format()
-				}
+						.format(),
+					'rand:emoji': getRandEmoii()
+				})
 			],
+
 			bodyAttrs: {
 				class: 'body-pages-standart'
 			},
 			link: [
-				{
-					hid: 'image_src',
-					rel: 'image_src',
-					href: this.getStorageNews + this.coverArticleMeta.src
-				},
-				{
-					hid: 'canonical',
-					rel: 'canonical',
-					href: this.$store.state.baseurl + 'news/' + this.slug
-				}
+				...createLinkTag(this, {
+					image_src: this.getStorageNews + this.coverArticleMeta.src,
+					canonical: this.$store.state.baseurl + 'news/' + this.slug
+				})
 			]
 		}
 	},

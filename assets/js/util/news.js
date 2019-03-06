@@ -82,9 +82,18 @@ function formatedText(value) {
 	return text.split('\n')
 }
 
+function getRandEmoii() {
+	console.log(1)
+	let emoji = Object.keys(require('./slug/emoji.json'))
+	return emoji
+		.sort(() => Math.random() - 0.5)
+		.slice(0, 5)
+		.join('')
+}
 export {
 	getNewsTitlePage,
 	getNewsDescription,
 	formatedText,
-	formatedTextFilter
+	formatedTextFilter,
+	getRandEmoii
 }

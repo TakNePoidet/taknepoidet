@@ -21,6 +21,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
 import ProjectItem from '~/components/ProjectItem.vue'
+import { createMetaTag, createLinkTag } from '~/assets/js/util/meta'
 export default {
 	components: {
 		ProjectItem
@@ -29,58 +30,30 @@ export default {
 	head() {
 		return {
 			title: this.title,
+
 			meta: [
-				{
-					hid: 'og:title',
-					name: 'og:title',
-					content: this.title
-				},
-				{
-					hid: 'description',
-					name: 'description',
-					content: this.$store.state.lang.page.project.description
-				},
-				{
-					hid: 'og:description',
-					name: 'og:description',
-					content: this.$store.state.lang.page.project.description
-				},
-				{
-					hid: 'og:image',
-					name: 'og:image',
-					content: '/images/cover-site-project.jpg'
-				},
-				{
-					hid: 'og:image:url',
-					name: 'og:image:url',
-					content: '/images/cover-site-project.jpg'
-				},
-				{
-					hid: 'og:image:secure_url',
-					name: 'og:image:secure_url',
-					content: '/images/cover-site-project.jpg'
-				},
-				{
-					hid: 'og:url',
-					name: 'og:url',
-					content: this.$store.state.baseurl + 'project/'
-				}
+				...createMetaTag(this, {
+					title: this.title,
+					description: this.$store.state.lang.page.project
+						.description,
+					image: {
+						src: '/images/cover-site-project.jpg',
+						width: 1200,
+						height: 600
+					},
+					'og:url': this.$store.state.baseurl + 'project/'
+				})
 			],
+			link: [
+				...createLinkTag(this, {
+					image_src: '/images/cover-site-project.jpg',
+					canonical: this.$store.state.baseurl + 'project/'
+				})
+			],
+
 			bodyAttrs: {
 				class: 'body-pages-standart'
-			},
-			link: [
-				{
-					hid: 'image_src',
-					rel: 'image_src',
-					href: '/images/cover-site-project.jpg'
-				},
-				{
-					hid: 'canonical',
-					rel: 'canonical',
-					href: this.$store.state.baseurl + 'project/'
-				}
-			]
+			}
 		}
 	},
 

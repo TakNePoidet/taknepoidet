@@ -18,6 +18,7 @@ import { mapActions, mapGetters } from 'vuex'
 import axios from 'axios'
 import NewsMin from '~/components/news-min.vue'
 import Paginate from '~/components/paginate.vue'
+import { createMetaTag, createLinkTag } from '~/assets/js/util/meta'
 export default {
 	watchQuery: ['page'],
 	key: to => to.fullPath,
@@ -34,58 +35,28 @@ export default {
 	head() {
 		return {
 			title: this.title,
+
 			meta: [
-				{
-					hid: 'og:title',
-					name: 'og:title',
-					content: this.title
-				},
-				{
-					hid: 'description',
-					name: 'description',
-					content: this.$store.state.lang.page.index.description
-				},
-				{
-					hid: 'og:description',
-					name: 'og:description',
-					content: this.$store.state.lang.page.index.description
-				},
-				{
-					hid: 'og:image',
-					name: 'og:image',
-					content: '/images/cover-site-post.jpg'
-				},
-				{
-					hid: 'og:image:url',
-					name: 'og:image:url',
-					content: '/images/cover-site-post.jpg'
-				},
-				{
-					hid: 'og:image:secure_url',
-					name: 'og:image:secure_url',
-					content: '/images/cover-site-post.jpg'
-				},
-				{
-					hid: 'og:url',
-					name: 'og:url',
-					content: this.$store.state.baseurl + 'news/'
-				}
+				...createMetaTag(this, {
+					title: this.title,
+					description: this.$store.state.lang.page.index.description,
+					image: {
+						src: '/images/cover-site-post.jpg',
+						width: 1200,
+						height: 600
+					},
+					'og:url': this.$store.state.baseurl + 'news/'
+				})
+			],
+			link: [
+				...createLinkTag(this, {
+					image_src: '/images/cover-site-news.jpg',
+					canonical: this.$store.state.baseurl + 'news/'
+				})
 			],
 			bodyAttrs: {
 				class: 'body-pages-standart'
-			},
-			link: [
-				{
-					hid: 'image_src',
-					rel: 'image_src',
-					href: '/images/cover-site-news.jpg'
-				},
-				{
-					hid: 'canonical',
-					rel: 'canonical',
-					href: this.$store.state.baseurl + 'news/'
-				}
-			]
+			}
 		}
 	},
 

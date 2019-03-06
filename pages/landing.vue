@@ -36,43 +36,34 @@
 import axios from 'axios'
 import { mapActions, mapGetters } from 'vuex'
 import MadeInBananStydio from '~/components/MadeInBananStydio.vue'
+import { createMetaTag, createLinkTag } from '~/assets/js/util/meta'
 export default {
 	layout: 'landing',
 	head() {
 		return {
 			title: this.title,
 			meta: [
-				{
-					hid: 'viewport',
-					name: 'viewport',
-					content: 'width=1200,user-scalable=yes'
-				},
-				{
-					hid: 'og:title',
-					name: 'og:title',
-					content: this.title
-				},
-				{
-					hid: 'description',
-					name: 'description',
-					content: this.description
-				},
-				{
-					hid: 'og:description',
-					name: 'og:description',
-					content: this.description
-				}
+				...createMetaTag(this, {
+					viewport: 'width=1200,user-scalable=yes',
+					title: this.title,
+					description: this.description,
+					image: {
+						src: '/images/cover-site-landing.jpg',
+						width: 1200,
+						height: 600
+					},
+					'og:url': this.$store.state.baseurl + 'landing/'
+				})
+			],
+			link: [
+				...createLinkTag(this, {
+					image_src: '/images/cover-site-landing.jpg',
+					canonical: this.$store.state.baseurl + 'landing/'
+				})
 			],
 			bodyAttrs: {
 				class: 'body-landing-page'
-			},
-			link: [
-				{
-					hid: 'canonical',
-					rel: 'canonical',
-					href: this.$store.state.baseurl + 'landing/'
-				}
-			]
+			}
 		}
 	},
 	components: {

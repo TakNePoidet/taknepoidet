@@ -84,7 +84,14 @@ export default {
 				...createMetaTag(this, {
 					title: this.title,
 					description: this.description,
-					image: this.coverArticleMeta,
+					image: {
+						src:
+							this.$store.state.storage +
+							'/images/news/' +
+							this.coverArticleMeta.src,
+						width: this.coverArticleMeta.width,
+						height: this.coverArticleMeta.height
+					},
 					'og:type': 'article',
 					'og:url':
 						this.$store.state.baseurl + 'news/' + this.slug + '/',

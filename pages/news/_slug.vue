@@ -3,22 +3,24 @@
 		<div class="section-news-page">
 			<article class="news-single-page">
 				<div class="news-single-page__content">
-					<p v-for="(paragraph, keyp) in formatedText" :key="keyp" v-html="paragraph"/>
-				</div>
-				<div ref="gallery" class="news-single-page__gallery">
-					<img
-						v-for="(photo, key) in photos"
-						:key="key"
-						:src="$store.state.storage + '/images/news/' + photo.standart.src"
-						:width="`${photo.standart.width}px`"
-						:height="`${photo.standart.height}px`"
-						@click="InstallImageViewer($store.state.storage + '/images/news/' + photo.original.src)"
-					>
-				</div>
+					<template v-for="(item, key) in getParagraph">
+						<p v-if="item.type === 'text'" :key="key" v-html="item.content"/>
 
-				<time :title="moment(created_at * 1000).utc().format()">
-					<i>{{ dateFormatPost() }}</i>
-				</time>
+						<figure v-if="item.type === 'photos'" :key="key">
+							<img
+								:src="$store.state.storage + '/images/news/' + item.content.standart.src"
+								:width="`${item.content.standart.width}px`"
+								:height="`${item.content.standart.height}px`"
+								@click="InstallImageViewer($store.state.storage + '/images/news/' + item.content.original.src)"
+							>
+						</figure>
+					</template>
+					<p class="news-single-page__time">
+						<time :title="moment(created_at * 1000).utc().format()">
+							<i>{{ dateFormatPost() }}</i>
+						</time>
+					</p>
+				</div>
 
 				<div
 					v-if="prev || next"
@@ -229,6 +231,43 @@ export default {
 		},
 		getStorageNews() {
 			return this.$store.state.storage + '/images/news/'
+		},
+		getParagraph() {
+			let { formatedText, photos } = this
+			let countParagraph = formatedText.length
+			let countImages = photos.length
+
+			let indexParagraph = 0
+			let indexImages = 0
+
+			let paragraph = []
+			while (indexParagraph < countParagraph) {
+				paragraph.push({
+					type: 'text',
+					content: formatedText[indexParagraph]
+				})
+				if (
+					photos[indexImages] &&
+					indexParagraph % 3 == 0 &&
+					indexImages < countImages - 1
+				) {
+					paragraph.push({
+						type: 'photos',
+						content: photos[indexImages]
+					})
+					indexImages++
+				}
+				indexParagraph++
+			}
+
+			while (indexImages < countImages) {
+				paragraph.push({
+					type: 'photos',
+					content: photos[indexImages]
+				})
+				indexImages++
+			}
+			return paragraph
 		}
 
 		// title() {

@@ -1,5 +1,6 @@
 <template>
-	<ul v-if="paginate.length > 1" class="pagination">
+	<ul v-if="paginate.length > 1"
+		class="pagination">
 		<li
 			v-for="page in paginate"
 			:key="page.num"
@@ -18,51 +19,41 @@ export default {
 	props: {
 		current: {
 			type: Number,
-			default: () => {
-				return null
-			}
+			default: () => null
 		},
 		all: {
 			type: Number,
-			default: () => {
-				return null
-			}
+			default: () => null
 		},
 		show: {
 			type: Number,
-			default: () => {
-				return 3
-			}
+			default: () => 3
 		},
 
 		countPage: {
 			type: Number,
-			default: () => {
-				return 0
-			}
+			default: () => 0
 		},
 
 		parentLink: {
 			type: String,
-			default: () => {
-				return '/'
-			}
+			default: () => "/"
 		}
 	},
 
 	computed: {
 		paginate() {
-			let { current, all, show, parentLink, countPage } = this
+			const { current, all, show, parentLink, countPage } = this;
 
-			let max = Math.round(all / countPage) + 1
-			let pagination = [],
-				dount_prev = 0,
-				dount_last = 0
+			const max = Math.round(all / countPage) + 1;
+			const pagination = [];
+			let dount_prev = 0;
+			let dount_last = 0;
 			// let show = 3;
 
 			for (let i = 0; i < max; i++) {
-				let page = {}
-				let page_num = i + 1
+				let page = {};
+				const page_num = i + 1;
 				if (
 					page_num > 1 &&
 					page_num < max &&
@@ -73,21 +64,21 @@ export default {
 						page = {
 							disabled: true,
 							active: false,
-							text: '...',
+							text: "...",
 							num: page_num
-						}
-						dount_prev = 1
-						pagination.push(page)
+						};
+						dount_prev = 1;
+						pagination.push(page);
 					}
 					if (page_num > current + show && dount_last == 0) {
 						page = {
 							disabled: true,
 							active: false,
-							text: '...',
+							text: "...",
 							num: page_num
-						}
-						dount_last = 1
-						pagination.push(page)
+						};
+						dount_last = 1;
+						pagination.push(page);
 					}
 				} else {
 					page = {
@@ -95,12 +86,12 @@ export default {
 						disabled: false,
 						active: current === page_num,
 						text: page_num
-					}
-					pagination.push(page)
+					};
+					pagination.push(page);
 				}
 			}
-			return pagination
+			return pagination;
 		}
 	}
-}
+};
 </script>

@@ -1,18 +1,18 @@
 // isPassive
 function isPassive() {
-	var supportsPassiveOption = false
+	let supportsPassiveOption = false;
 	try {
 		addEventListener(
-			'test',
+			"test",
 			null,
-			Object.defineProperty({}, 'passive', {
-				get: function() {
-					supportsPassiveOption = true
+			Object.defineProperty({}, "passive", {
+				get() {
+					supportsPassiveOption = true;
 				}
 			})
-		)
+		);
 	} catch (e) {}
-	return supportsPassiveOption
+	return supportsPassiveOption;
 }
 
-export default isPassive
+export default isPassive;

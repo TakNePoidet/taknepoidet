@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*!
  * Device 1.0.0
  *
@@ -5,109 +6,110 @@
  * Copyright 2019, MIT License
  *
  */
-void (function(window, factory) {
-	if (typeof define == 'function' && define.amd) {
+// eslint-disable-next-line prettier/prettier
+void (function (window, factory) {
+	if (typeof define === "function" && define.amd) {
 		// AMD
 
-		define([], factory)
-	} else if (typeof module == 'object' && module.exports) {
+		define([], factory);
+	} else if (typeof module === "object" && module.exports) {
 		// CommonJS
 
-		module.exports = factory()
+		module.exports = factory();
 	} else {
 		// browser global
-		window.Device = factory()
+		window.Device = factory();
 	}
-})(window, function() {
+})(window, () => {
 	function Device() {
-		const userAgent = window.navigator.userAgent.toLowerCase()
+		const userAgent = window.navigator.userAgent.toLowerCase();
 
 		const television = [
-			'googletv',
-			'viera',
-			'smarttv',
-			'internet.tv',
-			'netcast',
-			'nettv',
-			'appletv',
-			'boxee',
-			'kylo',
-			'roku',
-			'dlnadoc',
-			'pov_tv',
-			'hbbtv',
-			'ce-html'
-		]
-		const changeOrientationList = []
+			"googletv",
+			"viera",
+			"smarttv",
+			"internet.tv",
+			"netcast",
+			"nettv",
+			"appletv",
+			"boxee",
+			"kylo",
+			"roku",
+			"dlnadoc",
+			"pov_tv",
+			"hbbtv",
+			"ce-html"
+		];
+		const changeOrientationList = [];
 		function handleOrientation() {
 			if (device.getLandscape()) {
-				walkOnChangeOrientationList('landscape')
+				walkOnChangeOrientationList("landscape");
 			} else {
-				walkOnChangeOrientationList('portrait')
+				walkOnChangeOrientationList("portrait");
 			}
 		}
 		function walkOnChangeOrientationList(newOrientation) {
 			for (const index of changeOrientationList) {
-				index(newOrientation)
+				index(newOrientation);
 			}
 		}
 
 		function find(needle) {
-			return userAgent.indexOf(needle) !== -1
+			return userAgent.indexOf(needle) !== -1;
 		}
 
 		let device = {
 			getTypeDevice() {
 				if (this.isMobile()) {
-					return 'mobile'
+					return "mobile";
 				}
 				if (this.isTablet()) {
-					return 'tablet'
+					return "tablet";
 				}
 				if (this.isDesktop()) {
-					return 'desktop'
+					return "desktop";
 				}
 				if (this.isTelevision()) {
-					return 'television'
+					return "television";
 				}
-				return undefined
+				return undefined;
 			},
 
 			getOientation() {
 				if (this.getPortrait()) {
-					return 'portrait'
+					return "portrait";
 				}
 				if (this.getLandscape()) {
-					return 'landscape'
+					return "landscape";
 				}
-				return undefined
+				return undefined;
 			},
 			getDeviceOS() {
 				if (this.isIos()) {
-					return 'ios'
+					return "ios";
 				}
 				if (this.isAndroid()) {
-					return 'android'
+					return "android";
 				}
 				if (this.isBlackberry()) {
-					return 'blackberry'
+					return "blackberry";
 				}
 				if (this.isMacos()) {
-					return 'macos'
+					return "macos";
 				}
 				if (this.isWindows()) {
-					return 'windows'
+					return "windows";
 				}
 				if (this.isFxos()) {
-					return 'fxos'
+					return "fxos";
 				}
 				if (this.isMeego()) {
-					return 'meego'
+					return "meego";
 				}
 				if (this.television()) {
-					return 'television'
+					return "television";
 				}
-				return undefined
+				return undefined;
 			},
 			isMobile() {
 				if (
@@ -119,10 +121,9 @@ void (function(window, factory) {
 					this.isFxosPhone() ||
 					this.isMeego()
 				) {
-					return true
-				} else {
-					return false
+					return true;
 				}
+				return false;
 			},
 			isTablet() {
 				if (
@@ -132,99 +133,98 @@ void (function(window, factory) {
 					this.isWindowsTablet() ||
 					this.isFxosTablet()
 				) {
-					return true
-				} else {
-					return false
+					return true;
 				}
+				return false;
 			},
 
 			isDesktop() {
-				return !this.isTablet() && !this.isMobile()
+				return !this.isTablet() && !this.isMobile();
 			},
 			isTelevision() {
-				let i = 0
+				let i = 0;
 				while (i < television.length) {
 					if (find(television[i])) {
-						return true
+						return true;
 					}
-					i++
+					i++;
 				}
-				return false
+				return false;
 			},
 
 			isMacos() {
-				return find('mac')
+				return find("mac");
 			},
 
 			isIos() {
-				return this.isIphone() || this.isIpod() || this.isIpad()
+				return this.isIphone() || this.isIpod() || this.isIpad();
 			},
 
 			isIphone() {
-				return !this.isWindows() && find('iphone')
+				return !this.isWindows() && find("iphone");
 			},
 
 			isIpod() {
-				return find('ipod')
+				return find("ipod");
 			},
 
 			isIpad() {
-				return find('ipad')
+				return find("ipad");
 			},
 
 			isAndroid() {
-				return !this.isWindows() && find('android')
+				return !this.isWindows() && find("android");
 			},
 
 			isAndroidPhone() {
-				return this.isAndroid() && find('mobile')
+				return this.isAndroid() && find("mobile");
 			},
 
 			isAndroidTablet() {
-				return this.isAndroid() && !find('mobile')
+				return this.isAndroid() && !find("mobile");
 			},
 
 			isBlackberry() {
-				return find('blackberry') || find('bb10') || find('rim')
+				return find("blackberry") || find("bb10") || find("rim");
 			},
 
 			isBlackberryPhone() {
-				return this.isBlackberry() && !find('tablet')
+				return this.isBlackberry() && !find("tablet");
 			},
 
 			isBlackberryTablet() {
-				return this.isBlackberry() && find('tablet')
+				return this.isBlackberry() && find("tablet");
 			},
 
 			isWindows() {
-				return find('windows')
+				return find("windows");
 			},
 
 			isWindowsPhone() {
-				return this.isWindows() && find('phone')
+				return this.isWindows() && find("phone");
 			},
 
 			isWindowsTablet() {
 				return (
 					this.isWindows() &&
-					(find('touch') && !this.isWindowsPhone())
-				)
+					(find("touch") && !this.isWindowsPhone())
+				);
 			},
 
 			isFxos() {
-				return (find('mobile') || find('tablet')) && find('rv:')
+				return (find("mobile") || find("tablet")) && find("rv:");
 			},
 
 			isFxosPhone() {
-				return this.isFxos() && find('mobile')
+				return this.isFxos() && find("mobile");
 			},
 
 			isFxosTablet() {
-				return this.isFxos() && find('tablet')
+				return this.isFxos() && find("tablet");
 			},
 
 			isMeego() {
-				return find('meego')
+				return find("meego");
 			},
 
 			getPortrait() {
@@ -232,12 +232,12 @@ void (function(window, factory) {
 					screen.orientation &&
 					Object.prototype.hasOwnProperty.call(
 						window,
-						'onorientationchange'
+						"onorientationchange"
 					)
 				) {
-					return screen.orientation.type.includes('portrait')
+					return screen.orientation.type.includes("portrait");
 				}
-				return window.innerHeight / window.innerWidth > 1
+				return window.innerHeight / window.innerWidth > 1;
 			},
 
 			getLandscape() {
@@ -245,22 +245,22 @@ void (function(window, factory) {
 					screen.orientation &&
 					Object.prototype.hasOwnProperty.call(
 						window,
-						'onorientationchange'
+						"onorientationchange"
 					)
 				) {
-					return screen.orientation.type.includes('landscape')
+					return screen.orientation.type.includes("landscape");
 				}
-				return window.innerHeight / window.innerWidth < 1
+				return window.innerHeight / window.innerWidth < 1;
 			},
 
 			onChangeOrientation(cb) {
-				if (typeof cb == 'function') {
-					changeOrientationList.push(cb)
+				if (typeof cb === "function") {
+					changeOrientationList.push(cb);
 				}
 			}
-		}
+		};
 
-		return device
+		return device;
 	}
-	return Device
-})
+	window.Device = Device;
+});

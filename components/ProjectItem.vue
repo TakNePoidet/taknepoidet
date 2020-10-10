@@ -3,7 +3,8 @@
 		v-if="data"
 		:class="['project__item', {wow: animation}, animationType ? setAnimationType() : 'flipInX']"
 	>
-		<a :href="data.link" target="_blank">
+		<a :href="data.link"
+			target="_blank">
 			<div class="project__images">
 				<img
 					:src="`${$store.state.storage}/images/projects/${data.images}.jpg`"
@@ -16,51 +17,44 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
+
 export default {
 	props: {
 		data: {
 			type: Object,
-			default: () => {
-				return null
-			}
+			default: () => null
 		},
 		animation: {
 			type: Boolean,
-			default: () => {
-				return false
-			}
+			default: () => false
 		},
 		animationType: {
 			type: [String, Array],
-			default: () => {
-				return ''
-			}
+			default: () => ""
 		},
 		index: {
 			type: Number,
-			default: () => {
-				return false
-			}
+			default: () => false
 		}
 	},
 
 	data() {
-		return {}
+		return {};
 	},
 	computed: {
-		...mapGetters(['getLocale'])
+		...mapGetters(["getLocale"])
 	},
 	methods: {
 		setAnimationType() {
-			let animationType = this.animationType
-			if (typeof animationType === 'string') {
-				return animationType
+			const { animationType } = this;
+			if (typeof animationType === "string") {
+				return animationType;
 			}
-			if (typeof animationType === 'object') {
-				return this.index & 1 ? animationType[0] : animationType[1]
+			if (typeof animationType === "object") {
+				return this.index & 1 ? animationType[0] : animationType[1];
 			}
 		}
 	}
-}
+};
 </script>

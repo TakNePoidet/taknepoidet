@@ -1,32 +1,45 @@
 <template>
-	<header :class="[open ? 'open' : '', fixed ? 'fixed' : '', show ? 'show' : 'hide']" class="header">
+	<header :class="[open ? 'open' : '', fixed ? 'fixed' : '', show ? 'show' : 'hide']"
+		class="header">
 		<div class="header__wrap">
-			<nuxt-link :to="backLink" class="header__prew" @click="open = !open">
+			<nuxt-link :to="backLink"
+				class="header__prew"
+				@click="open = !open">
 				<i class="fas fa-arrow-left"/>
 			</nuxt-link>
 
 			<div class="header__logo">
-				<nuxt-link to="/" @click="open = !open">
+				<nuxt-link to="/"
+					@click="open = !open">
 					<app-logo/>
 				</nuxt-link>
 			</div>
-			<div class="header__bars" @click="open = !open">
+			<div class="header__bars"
+				@click="open = !open">
 				<i class="fas fa-bars"/>
 			</div>
 		</div>
 		<nav class="mainnav">
-			<ul ref="mainnav" :class="{scroll: scrollMainnav}">
-				<li v-for="link in linksFilter" :key="link.key">
-					<nuxt-link v-if="!link.new_window" :to="link.path" @click="close">{{ link.title }}</nuxt-link>
-					<a v-else :href="link.path" target="_blank" @click="close">{{ link.title }}</a>
+			<ul ref="mainnav"
+				:class="{scroll: scrollMainnav}">
+				<li v-for="link in linksFilter"
+					:key="link.key">
+					<nuxt-link v-if="!link.new_window"
+						:to="link.path"
+						@click="close">{{ link.title }}</nuxt-link>
+					<a v-else
+						:href="link.path"
+						target="_blank"
+						@click="close">{{ link.title }}</a>
 				</li>
 			</ul>
 		</nav>
 	</header>
 </template>
 <script>
-import { mapState } from 'vuex'
-import AppLogo from '~/components/AppLogo.vue'
+import { mapState } from "vuex";
+import AppLogo from "~/components/AppLogo.vue";
+
 export default {
 	components: {
 		AppLogo
@@ -41,157 +54,153 @@ export default {
 			scrollMainnav: false,
 			links: [
 				{
-					key: 'about',
+					key: "about",
 					title: this.$store.state.lang.header.about_me,
-					path: '/#about'
+					path: "/#about"
 				},
 				{
-					key: 'news',
+					key: "news",
 					title: this.$store.state.lang.header.records,
-					path: '/news/'
+					path: "/news/"
 				},
 				{
-					key: 'social',
+					key: "social",
 					title: this.$store.state.lang.header.contacts,
-					path: '/#social'
+					path: "/#social"
 				},
 				{
-					key: 'landing',
+					key: "landing",
 					title: this.$store.state.lang.header.landing_list,
-					path: '/landing/',
+					path: "/landing/",
 					new_window: true
 				},
 				{
-					key: 'project',
+					key: "project",
 					title: this.$store.state.lang.header.projects,
-					path: '/project/'
+					path: "/project/"
 				}
 			]
-		}
+		};
 	},
 
 	computed: {
-		...mapState(['baseurl']),
+		...mapState(["baseurl"]),
 
 		backLink() {
-			this.close()
-			let path = this.$nuxt._route.path
-				.split('/')
-				.filter(el => el.length > 0)
+			this.close();
+			const path = this.$nuxt._route.path
+				.split("/")
+				.filter(el => el.length > 0);
 
-			let link = path[path.length - 2]
-			return typeof link !== 'undefined' ? '/' + link : '/'
+			const link = path[path.length - 2];
+			return typeof link !== "undefined" ? `/${link}` : "/";
 		},
 		currentPath() {
-			let path = this.$nuxt._route.path
-				.split('/')
-				.filter(el => el.length > 0)
+			const path = this.$nuxt._route.path
+				.split("/")
+				.filter(el => el.length > 0);
 
-			let link = path[path.length - 1]
-			if (typeof link === 'undefined') {
-				link = 'home'
+			let link = path[path.length - 1];
+			if (typeof link === "undefined") {
+				link = "home";
 			}
-			return link
+			return link;
 		},
 		currentLink() {
-			let link = this.$nuxt._route.path
-			return link
+			const link = this.$nuxt._route.path;
+			return link;
 		},
 
 		linksFilter() {
-			return this.links.filter(item => {
-				return item.key !== this.currentPath
-			})
+			return this.links.filter(item => item.key !== this.currentPath);
 		}
 	},
 	watch: {
 		open() {
 			this.$nextTick(function() {
-				this.isScrollMainnav()
-			})
+				this.isScrollMainnav();
+			});
 		}
 	},
 	mounted() {
 		if (process.browser) {
-			this.scroll = window.pageYOffset
-			window.addEventListener('scroll', this.windowScroll)
-			window.addEventListener('resize', this.windowResize)
-			this.$refs['mainnav'].addEventListener(
-				'mousewheel',
+			this.scroll = window.pageYOffset;
+			window.addEventListener("scroll", this.windowScroll);
+			window.addEventListener("resize", this.windowResize);
+			this.$refs.mainnav.addEventListener(
+				"mousewheel",
 				this.onScrollMainNav
-			)
+			);
 
-			this.onScrollMainNav()
+			this.onScrollMainNav();
 		}
 	},
 	beforeDestroy() {
 		if (process.browser) {
-			window.removeEventListener('scroll', this.windowScroll)
-			window.removeEventListener('resize', this.windowResize)
-			this.$refs['mainnav'].removeEventListener(
-				'mousewheel',
+			window.removeEventListener("scroll", this.windowScroll);
+			window.removeEventListener("resize", this.windowResize);
+			this.$refs.mainnav.removeEventListener(
+				"mousewheel",
 				this.onScrollMainNav
-			)
+			);
 		}
 	},
 	methods: {
 		close() {
-			this.open = false
+			this.open = false;
 		},
 
 		windowScroll() {
-			this.open = false
+			this.open = false;
 			if (window.pageYOffset > 90) {
-				this.fixed = true
-				document.body.classList.add('header-fixed')
-			} else {
-				if (window.pageYOffset == 0) {
-					this.fixed = false
-					this.show = false
-					document.body.classList.remove('header-fixed')
-				}
+				this.fixed = true;
+				document.body.classList.add("header-fixed");
+			} else if (window.pageYOffset == 0) {
+				this.fixed = false;
+				this.show = false;
+				document.body.classList.remove("header-fixed");
 			}
 			if (Math.abs(window.pageYOffset - this.scroll) > 100) {
 				if (this.scroll > window.pageYOffset) {
-					this.show = true
-					this.transition = true
+					this.show = true;
+					this.transition = true;
 				}
 				if (this.scroll < window.pageYOffset) {
-					this.show = false
+					this.show = false;
 				}
-				this.scroll = window.pageYOffset
+				this.scroll = window.pageYOffset;
 			}
 
 			if (this.scroll === 0) {
-				this.show = false
+				this.show = false;
 			}
 		},
 		onScrollMainNav(e) {
 			if (e) {
-				e.preventDefault()
-				let evt = e.originalEvent
-				let position = this.$refs['mainnav'].scrollLeft
-				position += e.deltaY < 0 ? -120 : 120
-				this.$refs['mainnav'].scrollLeft = position
+				e.preventDefault();
+				const evt = e.originalEvent;
+				let position = this.$refs.mainnav.scrollLeft;
+				position += e.deltaY < 0 ? -120 : 120;
+				this.$refs.mainnav.scrollLeft = position;
 			}
 		},
 		isScrollMainnav() {
-			let ul = this.$refs['mainnav']
+			const ul = this.$refs.mainnav;
 			if (ul.scrollWidth - ul.clientWidth > 0) {
-				this.scrollMainnav = true
+				this.scrollMainnav = true;
 			} else {
-				this.scrollMainnav = false
+				this.scrollMainnav = false;
 			}
 		},
 		windowResize() {
-			this.isScrollMainnav()
+			this.isScrollMainnav();
 		},
 		resetHeader() {
-			this.open = false
-			this.fixed = false
-			this.show = false
-			console.info('resetHeader')
+			this.open = false;
+			this.fixed = false;
+			this.show = false;
+			console.info("resetHeader");
 		}
 	}
-}
+};
 </script>

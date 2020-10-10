@@ -1,91 +1,92 @@
-import isPassive from './isPassive'
+import isPassive from "./isPassive";
 
 function TouchEvent(container, options) {
-	this.container = container
+	this.container = container;
 	// an enpty function
-	var noop = function() {}
-	this.onStart = options.onStart || noop
-	this.onMove = options.onMove || noop
-	this.onEnd = options.onEnd || noop
-	this.onMouseWheel = options.onMouseWheel || noop
-	this.onClick = options.onClick || noop
-	this.onPinch = options.onPinch || noop
+	const noop = function() {};
+	this.onStart = options.onStart || noop;
+	this.onMove = options.onMove || noop;
+	this.onEnd = options.onEnd || noop;
+	this.onMouseWheel = options.onMouseWheel || noop;
+	this.onClick = options.onClick || noop;
+	this.onPinch = options.onPinch || noop;
 }
 TouchEvent.prototype.init = function() {
-	var self = this
+	const self = this;
 	this.startHandle = function startHandle(estart) {
-		estart.preventDefault()
-		var eventType = estart.type
+		estart.preventDefault();
+		const eventType = estart.type;
 
-		var touchMove = eventType === 'touchstart' ? 'touchmove' : 'mousemove'
-		var touchEnd = eventType === 'touchstart' ? 'touchend' : 'mouseup'
+		const touchMove =
+			eventType === "touchstart" ? "touchmove" : "mousemove";
+		const touchEnd = eventType === "touchstart" ? "touchend" : "mouseup";
 
 		// 注意先后顺序，如果先拿 touches 的容易报错
-		var sx = estart.clientX || estart.touches[0].clientX
-		var sy = estart.clientY || estart.touches[0].clientY
+		const sx = estart.clientX || estart.touches[0].clientX;
+		const sy = estart.clientY || estart.touches[0].clientY;
 
-		var start = self.onStart(estart, {
+		const start = self.onStart(estart, {
 			x: sx,
 			y: sy
-		})
+		});
 
-		if (start === false) return
+		if (start === false) return;
 
-		if (eventType === 'touchstart' && estart.touches[1]) {
-			self.onPinch(estart)
+		if (eventType === "touchstart" && estart.touches[1]) {
+			self.onPinch(estart);
 		}
 
 		function moveListener(emove) {
-			emove.preventDefault()
+			emove.preventDefault();
 
-			//get the cordinates
-			var mx = emove.clientX || emove.touches[0].clientX
-			var my = emove.clientY || emove.touches[0].clientY
+			// get the cordinates
+			const mx = emove.clientX || emove.touches[0].clientX;
+			const my = emove.clientY || emove.touches[0].clientY;
 
 			self.onMove(emove, {
 				dx: mx - sx,
 				dy: my - sy,
-				mx: mx,
-				my: my
-			})
+				mx,
+				my
+			});
 		}
 		function endListener(emove) {
-			document.removeEventListener(touchMove, moveListener)
-			document.removeEventListener(touchEnd, endListener)
+			document.removeEventListener(touchMove, moveListener);
+			document.removeEventListener(touchEnd, endListener);
 
-			var mx = emove.clientX
-			var my = emove.clientY
+			const mx = emove.clientX;
+			const my = emove.clientY;
 			self.onEnd(emove, {
 				dx: mx - sx,
 				dy: my - sy,
-				mx: mx,
-				my: my
-			})
+				mx,
+				my
+			});
 		}
-		let _e = false
-		if (touchMove === 'touchmove' && isPassive()) {
+		let _e = false;
+		if (touchMove === "touchmove" && isPassive()) {
 			_e = {
 				capture: false,
 				passive: false
-			}
+			};
 		}
-		document.addEventListener(touchMove, moveListener, _e)
-		document.addEventListener(touchEnd, endListener)
-	}
+		document.addEventListener(touchMove, moveListener, _e);
+		document.addEventListener(touchEnd, endListener);
+	};
 
-	this.container.addEventListener('touchstart', this.startHandle, false)
-	this.container.addEventListener('mousedown', this.startHandle, false)
-	this.container.addEventListener('mousewheel', this.onMouseWheel, false)
-	this.container.addEventListener('click', this.onClick, false)
+	this.container.addEventListener("touchstart", this.startHandle, false);
+	this.container.addEventListener("mousedown", this.startHandle, false);
+	this.container.addEventListener("mousewheel", this.onMouseWheel, false);
+	this.container.addEventListener("click", this.onClick, false);
 
-	return this
-}
+	return this;
+};
 
 TouchEvent.prototype.destroy = function() {
-	this.container.removeEventListener('touchstart', this.startHandle)
-	this.container.removeEventListener('mousedown', this.startHandle)
-	this.container.removeEventListener('mousewheel', this.onMouseWheel)
-	this.container.removeEventListener('click', this.onClick)
-}
+	this.container.removeEventListener("touchstart", this.startHandle);
+	this.container.removeEventListener("mousedown", this.startHandle);
+	this.container.removeEventListener("mousewheel", this.onMouseWheel);
+	this.container.removeEventListener("click", this.onClick);
+};
 
-export default TouchEvent
+export default TouchEvent;

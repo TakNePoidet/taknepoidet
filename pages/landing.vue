@@ -2,7 +2,8 @@
 	<main>
 		<div class="section-landing">
 			<h2 class="section-title">{{ $store.state.lang.section.landing_list.title }}</h2>
-			<div ref="grid-landing" class="grid-landing">
+			<div ref="grid-landing"
+				class="grid-landing">
 				<div
 					v-for="(item, key) in rand_landing()"
 					:key="item.key"
@@ -33,95 +34,99 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { mapActions, mapGetters } from 'vuex'
-import MadeInBananStydio from '~/components/MadeInBananStydio.vue'
-import { createMetaTag, createLinkTag } from '~/assets/js/util/meta'
+import axios from "axios";
+import { mapActions, mapGetters } from "vuex";
+import MadeInBananStydio from "~/components/MadeInBananStydio.vue";
+import { createMetaTag, createLinkTag } from "~/assets/js/util/meta";
+
 export default {
-	layout: 'landing',
+	layout: "landing",
 	head() {
 		return {
 			title: this.title,
 			meta: [
 				...createMetaTag(this, {
-					viewport: 'width=1200,user-scalable=yes',
+					viewport: "width=1200,user-scalable=yes",
 					title: this.title,
 					description: this.description,
 					image: {
-						src: '/images/cover-site-landing.jpg',
+						src: "/images/cover-site-landing.jpg",
 						width: 1200,
 						height: 600
 					},
-					'og:url': this.$store.state.baseurl + 'landing/'
+					"og:url": `${this.$store.state.baseurl}landing/`
 				})
 			],
 			link: [
 				...createLinkTag(this, {
-					image_src: '/images/cover-site-landing.jpg',
-					canonical: this.$store.state.baseurl + 'landing/'
+					image_src: "/images/cover-site-landing.jpg",
+					canonical: `${this.$store.state.baseurl}landing/`
 				})
 			],
 			bodyAttrs: {
-				class: 'body-landing-page'
+				class: "body-landing-page"
 			}
-		}
+		};
 	},
 	components: {
 		MadeInBananStydio
 	},
 	async asyncData({ params, store }) {
 		try {
-			let { data } = await axios.get(`${store.state.api}methods/landing`)
+			const { data } = await axios.get(
+				`${store.state.api}methods/landing`
+			);
 			return {
 				landing: data,
 				title: store.state.lang.page.landing.title,
 				description: store.state.lang.page.landing.description
-			}
+			};
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
 	},
 	data() {
 		return {
 			landing: [],
-			description: '',
-			title: ''
-		}
+			description: "",
+			title: ""
+		};
 	},
 	computed: {
-		...mapGetters(['getLocale'])
+		...mapGetters(["getLocale"])
 	},
 	mounted() {
 		if (process.browser) {
-			var Masonry = require('masonry-layout')
-			let masonry = new Masonry(this.$refs['grid-landing'], {
-				itemSelector: '.grid-landing-item',
+			const Masonry = require("masonry-layout");
+			const masonry = new Masonry(this.$refs["grid-landing"], {
+				itemSelector: ".grid-landing-item",
 				columnWidth: 350,
 				gutter: 30
-			})
+			});
 		}
 	},
 
 	methods: {
 		shuffle(sourceArray) {
-			for (var i = 0; i < sourceArray.length - 1; i++) {
-				var j = i + Math.floor(Math.random() * (sourceArray.length - i))
+			for (let i = 0; i < sourceArray.length - 1; i++) {
+				const j =
+					i + Math.floor(Math.random() * (sourceArray.length - i));
 
-				var temp = sourceArray[j]
-				sourceArray[j] = sourceArray[i]
-				sourceArray[i] = temp
+				const temp = sourceArray[j];
+				sourceArray[j] = sourceArray[i];
+				sourceArray[i] = temp;
 			}
-			return sourceArray
+			return sourceArray;
 		},
 		rand_landing() {
 			if (process.browser) {
-				let fullCopy = this.landing.slice()
-				let rand_landing = fullCopy.sort(function(a, b) {
-					return Math.random() - 0.5
-				})
-				return rand_landing
+				const fullCopy = this.landing.slice();
+				const rand_landing = fullCopy.sort(
+					(a, b) => Math.random() - 0.5
+				);
+				return rand_landing;
 			}
 		}
 	}
-}
+};
 </script>

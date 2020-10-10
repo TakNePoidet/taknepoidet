@@ -6,9 +6,9 @@
 	</div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import AppHeader from '~/components/Header.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import { mapActions, mapGetters } from "vuex";
+import AppHeader from "~/components/Header.vue";
+import AppFooter from "~/components/AppFooter.vue";
 
 export default {
 	components: {
@@ -22,65 +22,65 @@ export default {
 			},
 			meta: [
 				{
-					hid: 'viewport',
-					name: 'viewport',
-					content: 'width=1200,user-scalable=yes'
+					hid: "viewport",
+					name: "viewport",
+					content: "width=1200,user-scalable=yes"
 				},
 				{
-					hid: 'og:image',
-					name: 'og:image',
-					content: '/images/cover-site-landing.jpg'
+					hid: "og:image",
+					name: "og:image",
+					content: "/images/cover-site-landing.jpg"
 				},
 				{
-					hid: 'og:image:url',
-					name: 'og:image:url',
-					content: '/images/cover-site-landing.jpg'
+					hid: "og:image:url",
+					name: "og:image:url",
+					content: "/images/cover-site-landing.jpg"
 				},
 				{
-					hid: 'og:image:secure_url',
-					name: 'og:image:secure_url',
-					content: '/images/cover-site-landing.jpg'
+					hid: "og:image:secure_url",
+					name: "og:image:secure_url",
+					content: "/images/cover-site-landing.jpg"
 				},
 				{
-					hid: 'og:image:width',
-					name: 'og:image:width',
+					hid: "og:image:width",
+					name: "og:image:width",
 					content: 1200
 				},
 				{
-					hid: 'og:image:height',
-					name: 'og:image:height',
+					hid: "og:image:height",
+					name: "og:image:height",
 					content: 600
 				},
 				{
-					hid: 'author',
-					name: 'author',
+					hid: "author",
+					name: "author",
 					content: this.$store.state.lang.page.standart.author
 				},
 				{
-					hid: 'article:author',
-					name: 'article:author',
+					hid: "article:author",
+					name: "article:author",
 					content: this.$store.state.baseurl
 				},
 				{
-					hid: 'og:url',
-					name: 'og:url',
-					content: this.$store.state.baseurl + 'landing/'
+					hid: "og:url",
+					name: "og:url",
+					content: `${this.$store.state.baseurl}landing/`
 				}
 			],
 			link: [
 				{
-					hid: 'image_src',
-					rel: 'image_src',
-					href: '/images/cover-site-landing.jpg'
+					hid: "image_src",
+					rel: "image_src",
+					href: "/images/cover-site-landing.jpg"
 				}
 			]
-		}
+		};
 	},
 	computed: {
-		...mapGetters(['getThemes']),
+		...mapGetters(["getThemes"]),
 		classList() {
-			let list = [`themes-${this.getThemes}`]
-			return list.join(' ')
+			const list = [`themes-${this.getThemes}`];
+			return list.join(" ");
 		}
 	},
 	mounted() {
@@ -94,7 +94,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions(['setLocale'])
+		...mapActions(["setLocale"])
 	}
-}
+};
 </script>

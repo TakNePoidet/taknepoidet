@@ -1,5 +1,6 @@
 <template>
-	<footer id="footer" class="footer">
+	<footer id="footer"
+		class="footer">
 		<div class="footer__language">
 			<a
 				v-for="lang in getLanguageList"
@@ -34,23 +35,24 @@
 </template>
 <script>
 // import {  } from 'vuex';
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from "vuex";
+
 export default {
 	data() {
-		return {}
+		return {};
 	},
 
-	computed: mapGetters(['getLanguageList', 'getLocale', 'getThemes']),
+	computed: mapGetters(["getLanguageList", "getLocale", "getThemes"]),
 
 	methods: {
 		setLocale(locale, $event) {
-			$event.preventDefault()
-			this.$store.dispatch('setLocale', locale)
+			$event.preventDefault();
+			this.$store.dispatch("setLocale", locale);
 		},
 		setThemes(theme, $event) {
-			$event.preventDefault()
-			this.$store.dispatch('setThemes', theme)
+			$event.preventDefault();
+			this.$store.dispatch("setThemes", theme);
 		}
 	}
-}
+};
 </script>

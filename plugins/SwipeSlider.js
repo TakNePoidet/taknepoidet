@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*!
  * SwipeSlider 1.0.0
  *
@@ -5,93 +6,92 @@
  * Copyright 2019, MIT License
  *
  */
-void (function(window, factory) {
-	if (typeof define == 'function' && define.amd) {
+// eslint-disable-next-line prettier/prettier
+void (function (window, factory) {
+	if (typeof define === "function" && define.amd) {
 		// AMD
 
-		define([], factory)
-	} else if (typeof module == 'object' && module.exports) {
+		define([], factory);
+	} else if (typeof module === "object" && module.exports) {
 		// CommonJS
 
-		module.exports = factory()
+		module.exports = factory();
 	} else {
 		// browser global
-		window.SwipeSlider = factory()
+		window.SwipeSlider = factory();
 	}
-})(window, function() {
+})(window, () => {
 	function SwipeSlider(container, options) {
-		'use strict'
+		options = options || {};
 
-		options = options || {}
+		if (!container) return;
 
-		if (!container) return
+		const element = container.querySelector(".swipe-panel");
 
-		let element = container.querySelector('.swipe-panel')
-
-		let slides,
-			interval,
-			slidesCount = 0,
-			widthContainer,
-			translateX = 0,
-			delta = {},
-			locked = false,
-			disabled = false,
-			startDrag = {},
-			infinite = !(options.infinite === false),
-			// infinite = false,
-			autoplay = options.autoplay || false,
-			autoplaySpeed = parseInt(options.autoplaySpeed, 10) || 2000,
-			speed = parseInt(options.speed, 10) || 300,
-			transition = isNaN(parseInt(options.transition, 10))
-				? 400
-				: parseInt(options.transition, 10),
-			currentSlide = parseInt(options.startSlide, 10) || 0,
-			centerMode = options.centerMode || false,
-			slidesToScroll = parseInt(options.slidesToScroll, 10) || 1,
-			slidesToShow = parseInt(options.slidesToShow, 10) || 1,
-			slideWidth = parseInt(options.slideWidth, 10) || null,
-			dots = options.dots || false,
-			oldSlide = currentSlide
+		let slides;
+		let interval;
+		let slidesCount = 0;
+		let widthContainer;
+		let translateX = 0;
+		let delta = {};
+		let locked = false;
+		const disabled = false;
+		let startDrag = {};
+		let infinite = !(options.infinite === false);
+		// infinite = false,
+		const autoplay = options.autoplay || false;
+		const autoplaySpeed = parseInt(options.autoplaySpeed, 10) || 2000;
+		const speed = parseInt(options.speed, 10) || 300;
+		const transition = isNaN(parseInt(options.transition, 10))
+			? 400
+			: parseInt(options.transition, 10);
+		let currentSlide = parseInt(options.startSlide, 10) || 0;
+		const centerMode = options.centerMode || false;
+		const slidesToScroll = parseInt(options.slidesToScroll, 10) || 1;
+		const slidesToShow = parseInt(options.slidesToShow, 10) || 1;
+		const slideWidth = parseInt(options.slideWidth, 10) || null;
+		const dots = options.dots || false;
+		let oldSlide = currentSlide;
 
 		const events = {
 			handleEvent(event) {
 				// event.preventDefault()
-				if (disabled) return
+				if (disabled) return;
 				switch (event.type) {
-					case 'mousedown':
-					case 'touchstart':
-						this.start(event)
-						break
-					case 'mousemove':
-					case 'touchmove':
-						this.move(event)
-						break
-					case 'mouseup':
-					case 'mouseleave':
-					case 'touchend':
-						this.end(event)
-						break
-					case 'resize':
-						this.resize()
-						break
+					case "mousedown":
+					case "touchstart":
+						this.start(event);
+						break;
+					case "mousemove":
+					case "touchmove":
+						this.move(event);
+						break;
+					case "mouseup":
+					case "mouseleave":
+					case "touchend":
+						this.end(event);
+						break;
+					case "resize":
+						this.resize();
+						break;
 				}
 
 				if (options.stopPropagation) {
-					event.stopPropagation()
+					event.stopPropagation();
 				}
 			},
 
 			start(event) {
 				// event.preventDefault()
 
-				let touches
-				locked = true
+				let touches;
+				locked = true;
 
 				if (isMouseEvent(event)) {
-					touches = event
-					event.preventDefault() // For desktop Safari drag
+					touches = event;
+					event.preventDefault(); // For desktop Safari drag
 				} else {
-					touches = event.touches[0]
+					touches = event.touches[0];
 				}
 
 				startDrag = {
@@ -100,159 +100,159 @@ void (function(window, factory) {
 					y: touches.pageY,
 
 					time: +new Date()
-				}
+				};
 
-				delta = {}
+				delta = {};
 			},
 
 			move(event) {
 				// event.preventDefault()
-				if (!locked) return false
+				if (!locked) return false;
 
-				let touches
+				let touches;
 
 				if (isMouseEvent(event)) {
-					touches = event
+					touches = event;
 				} else {
 					// ensure swiping with one touch and not pinching
 					if (
 						event.touches.length > 1 ||
 						(event.scale && event.scale !== 1)
 					) {
-						return
+						return;
 					}
 
 					if (options.disableScroll) {
-						event.preventDefault()
+						event.preventDefault();
 					}
 
-					touches = event.touches[0]
+					touches = event.touches[0];
 				}
 
 				// measure change in x and y
 				delta = {
 					x: touches.pageX - startDrag.x,
 					y: touches.pageY - startDrag.y
-				}
-				let x = translateX + delta.x
+				};
+				const x = translateX + delta.x;
 
 				if (!infinite) {
 					if (delta.x < 0 && currentSlide === slidesCount - 1) {
-						return false
+						return false;
 					}
 				}
-				element.style.transform = `translate3d(${x}px, 0px, 0px)`
+				element.style.transform = `translate3d(${x}px, 0px, 0px)`;
 			},
 
 			end(event) {
-				if (!locked) return false
-				let k = (container.getBoundingClientRect().width / 100) * 25
-				let isValidSlide =
+				if (!locked) return false;
+				const k = (container.getBoundingClientRect().width / 100) * 25;
+				const isValidSlide =
 					(Number(duration) < k && Math.abs(delta.x) > k) ||
-					Math.abs(delta.x) > k
-				let duration = +new Date() - startDrag.time
+					Math.abs(delta.x) > k;
+				let duration = +new Date() - startDrag.time;
 
 				if (isValidSlide) {
-					let direction = Math.abs(delta.x) / delta.x
+					const direction = Math.abs(delta.x) / delta.x;
 					if (direction < 0) {
-						_nextSlide()
+						_nextSlide();
 					} else {
-						_prewSlide()
+						_prewSlide();
 					}
 				} else {
-					_AnimateToSlide(currentSlide, 0)
+					_AnimateToSlide(currentSlide, 0);
 				}
-				locked = false
+				locked = false;
 				// delta = {}
 			},
 
 			resize() {
-				_destroy()
-				_setup()
+				_destroy();
+				_setup();
 			}
-		}
+		};
 		/*
 		 * Приватный метод. Инициалиция слайдера
 		 *
 		 */
 		function _setup() {
-			widthContainer = container.getBoundingClientRect().width
-			let slides = [].slice.call(element.children)
-			let length = slides.length
-			slidesCount = length
+			widthContainer = container.getBoundingClientRect().width;
+			let slides = [].slice.call(element.children);
+			let { length } = slides;
+			slidesCount = length;
 
 			// Минус клоны
 			for (let i = 0; i < slides.length; i++) {
-				if (slides[i].getAttribute('data-cloned')) length--
+				if (slides[i].getAttribute("data-cloned")) length--;
 			}
 
 			if (slides.length < 2) {
-				infinite = false
+				infinite = false;
 			}
 
-			slides.forEach(slide => slide.setAttribute('data-cloned', false))
+			slides.forEach(slide => slide.setAttribute("data-cloned", false));
 
 			if (infinite) {
-				let j = 0
+				let j = 0;
 				for (let i = 0; i < slidesToShow + slidesToScroll; i++) {
-					let keyBefore = length - j - 1,
-						keyAppent = j
-					cloneInsertBefore(slides[keyBefore], keyBefore)
-					cloneInsertAppent(slides[keyAppent], keyAppent)
-					j++
-					if (j > slidesCount - 1) j = 0
+					const keyBefore = length - j - 1;
+					const keyAppent = j;
+					cloneInsertBefore(slides[keyBefore], keyBefore);
+					cloneInsertAppent(slides[keyAppent], keyAppent);
+					j++;
+					if (j > slidesCount - 1) j = 0;
 				}
 			}
 
-			slides = element.children
+			slides = element.children;
 
-			let track = 0
-			widthContainer = container.getBoundingClientRect().width
+			let track = 0;
+			widthContainer = container.getBoundingClientRect().width;
 			for (let i = 0; i < element.children.length; i++) {
-				let width
+				let width;
 				if (slideWidth) {
-					width = slideWidth
+					width = slideWidth;
 				} else {
-					width = widthContainer / slidesToShow
+					width = widthContainer / slidesToShow;
 				}
 				// let { width } = slides[0].getBoundingClientRect()
 
-				element.children[i].style.width = `${width}px`
+				element.children[i].style.width = `${width}px`;
 				element.children[i].setAttribute(
-					'data-index',
+					"data-index",
 					infinite ? i - slidesToShow - slidesToScroll : i
-				)
-				track += width
+				);
+				track += width;
 			}
-			element.style.width = `${track}px`
+			element.style.width = `${track}px`;
 
 			if (dots && slidesCount > 1) {
-				container.classList.add('swipe-this-dot')
-				let dots_count = Math.ceil(slidesCount / slidesToScroll)
-				if (!container.querySelector('.slider-controls')) {
-					let controls = document.createElement('ul')
-					controls.classList.add('slider-controls')
+				container.classList.add("swipe-this-dot");
+				const dots_count = Math.ceil(slidesCount / slidesToScroll);
+				if (!container.querySelector(".slider-controls")) {
+					const controls = document.createElement("ul");
+					controls.classList.add("slider-controls");
 					for (let i = 0; i < dots_count; i++) {
-						let li = document.createElement('li')
-						let button = document.createElement('button')
-						button.type = 'button'
-						button.innerHTML = i * slidesToShow + 1
-						button.setAttribute('data-index', i)
+						const li = document.createElement("li");
+						const button = document.createElement("button");
+						button.type = "button";
+						button.innerHTML = i * slidesToShow + 1;
+						button.setAttribute("data-index", i);
 						// button.dataset['index'] = i
-						button.addEventListener('click', _setSlideDots)
-						button.addEventListener('touchstart', _setSlideDots)
+						button.addEventListener("click", _setSlideDots);
+						button.addEventListener("touchstart", _setSlideDots);
 
-						li.appendChild(button)
-						controls.appendChild(li)
+						li.appendChild(button);
+						controls.appendChild(li);
 					}
 
-					container.appendChild(controls)
+					container.appendChild(controls);
 				}
 			}
-			detachEvents()
-			attachEvents()
-			_setSlide(currentSlide)
-			container.style.visibility = 'visible'
+			detachEvents();
+			attachEvents();
+			_setSlide(currentSlide);
+			container.style.visibility = "visible";
 		}
 
 		/*
@@ -260,36 +260,36 @@ void (function(window, factory) {
 		 *
 		 */
 		function setup() {
-			_setup()
+			_setup();
 		}
 		/*
 		 * Приватный метод. Уничтожение слайдера
 		 *
 		 */
 		function _destroy() {
-			_stop()
-			detachEvents()
+			_stop();
+			detachEvents();
 
-			if (container.querySelector('.slider-controls')) {
-				container.classList.remove('swipe-this-dot')
-				container.querySelector('.slider-controls').remove()
+			if (container.querySelector(".slider-controls")) {
+				container.classList.remove("swipe-this-dot");
+				container.querySelector(".slider-controls").remove();
 			}
 
-			slides = element.children
+			slides = element.children;
 			for (let i = 0; i < element.children.length; i++) {
-				element.children[i].style.width = ``
-				element.children[i].removeAttribute('data-index')
-				element.children[i].classList.remove('slide-active')
+				element.children[i].style.width = ``;
+				element.children[i].removeAttribute("data-index");
+				element.children[i].classList.remove("slide-active");
 			}
-			element.style.width = ``
-			element.style.transform = ``
+			element.style.width = ``;
+			element.style.transform = ``;
 
 			let _a = [].slice
-				.call(container.querySelectorAll('[data-cloned=true]'))
-				.forEach(e => e.remove())
+				.call(container.querySelectorAll("[data-cloned=true]"))
+				.forEach(e => e.remove());
 			_a = [].slice
-				.call(container.querySelectorAll('[data-cloned]'))
-				.forEach(e => e.removeAttribute('data-cloned'))
+				.call(container.querySelectorAll("[data-cloned]"))
+				.forEach(e => e.removeAttribute("data-cloned"));
 		}
 
 		/*
@@ -298,85 +298,88 @@ void (function(window, factory) {
 		 */
 
 		function destroy() {
-			_destroy()
+			_destroy();
 		}
 
 		function cloneInsertBefore(el, key) {
-			let clone = el.cloneNode(true)
-			element.insertBefore(clone, element.firstChild)
-			clone.setAttribute('data-cloned', true)
-			clone.setAttribute('data-slide-original', key)
-			clone.removeAttribute('id')
+			const clone = el.cloneNode(true);
+			element.insertBefore(clone, element.firstChild);
+			clone.setAttribute("data-cloned", true);
+			clone.setAttribute("data-slide-original", key);
+			clone.removeAttribute("id");
 		}
 		function cloneInsertAppent(el, key) {
-			let clone = el.cloneNode(true)
-			element.appendChild(clone)
-			clone.setAttribute('data-cloned', true)
-			clone.setAttribute('data-slide-original', key)
-			clone.removeAttribute('id')
+			const clone = el.cloneNode(true);
+			element.appendChild(clone);
+			clone.setAttribute("data-cloned", true);
+			clone.setAttribute("data-slide-original", key);
+			clone.removeAttribute("id");
 		}
 		function attachEvents() {
-			element.addEventListener('mousedown', events, false)
-			element.addEventListener('touchstart', events, false)
+			element.addEventListener("mousedown", events, false);
+			element.addEventListener("touchstart", events, false);
 
-			element.addEventListener('mousemove', events, false)
-			element.addEventListener('touchmove', events, false)
+			element.addEventListener("mousemove", events, false);
+			element.addEventListener("touchmove", events, false);
 
-			window.addEventListener('mouseup', events, false)
-			window.addEventListener('touchend', events, false)
+			window.addEventListener("mouseup", events, false);
+			window.addEventListener("touchend", events, false);
 
-			window.addEventListener('resize', events, false)
+			window.addEventListener("resize", events, false);
 
-			let _a = [].slice
-				.call(container.querySelectorAll('a'))
-				.forEach(e => e.addEventListener('click', eventsLink))
+			const _a = [].slice
+				.call(container.querySelectorAll("a"))
+				.forEach(e => e.addEventListener("click", eventsLink));
 
 			if (dots) {
-				if (container.querySelector('.slider-controls')) {
-					let _a = [].slice
+				if (container.querySelector(".slider-controls")) {
+					const _a = [].slice
 						.call(
 							container.querySelectorAll(
-								'.slider-controls button'
+								".slider-controls button"
 							)
 						)
 						.forEach(button => {
-							button.addEventListener('click', _setSlideDots)
-							button.addEventListener('touchstart', _setSlideDots)
-						})
+							button.addEventListener("click", _setSlideDots);
+							button.addEventListener(
+								"touchstart",
+								_setSlideDots
+							);
+						});
 				}
 			}
 		}
 		function detachEvents() {
-			element.removeEventListener('mousedown', events, false)
-			element.removeEventListener('touchstart', events, false)
+			element.removeEventListener("mousedown", events, false);
+			element.removeEventListener("touchstart", events, false);
 
-			element.removeEventListener('mousemove', events, false)
-			element.removeEventListener('touchmove', events, false)
+			element.removeEventListener("mousemove", events, false);
+			element.removeEventListener("touchmove", events, false);
 
-			window.removeEventListener('mouseup', events, false)
-			window.removeEventListener('touchend', events, false)
+			window.removeEventListener("mouseup", events, false);
+			window.removeEventListener("touchend", events, false);
 
-			window.removeEventListener('resize', events, false)
+			window.removeEventListener("resize", events, false);
 
-			let _a = [].slice
-				.call(container.querySelectorAll('a'))
-				.forEach(e => e.removeEventListener('click', eventsLink))
+			const _a = [].slice
+				.call(container.querySelectorAll("a"))
+				.forEach(e => e.removeEventListener("click", eventsLink));
 
 			if (dots) {
-				if (container.querySelector('.slider-controls')) {
-					let _a = [].slice
+				if (container.querySelector(".slider-controls")) {
+					const _a = [].slice
 						.call(
 							container.querySelectorAll(
-								'.slider-controls button'
+								".slider-controls button"
 							)
 						)
 						.forEach(button => {
-							button.removeEventListener('click', _setSlideDots)
+							button.removeEventListener("click", _setSlideDots);
 							button.removeEventListener(
-								'touchstart',
+								"touchstart",
 								_setSlideDots
-							)
-						})
+							);
+						});
 				}
 			}
 		}
@@ -390,120 +393,117 @@ void (function(window, factory) {
 				Object.keys(delta).length > 0 &&
 				(delta.x !== 0 || delta.y !== 0)
 			) {
-				e.preventDefault()
+				e.preventDefault();
 			}
 		}
 
 		function isMouseEvent(e) {
-			return /^mouse/.test(e.type)
+			return /^mouse/.test(e.type);
 		}
 		/*
 		 * Приватный метод. Перемотка следующий слайд
 		 *
 		 */
 		function _nextSlide() {
-			_stop()
-			let direction = slidesToScroll
+			_stop();
+			let direction = slidesToScroll;
 			// index слайда
-			let index = currentSlide + slidesToScroll
+			let index = currentSlide + slidesToScroll;
 			if (slidesCount - 1 < index) {
 				if (infinite) {
 					// 1 слайд, если слайдов больше index
-					index = 0
-					direction = slidesCount - currentSlide
+					index = 0;
+					direction = slidesCount - currentSlide;
 				} else {
 					// Последний слайд, если слайдов больше index
-					index = slidesCount - 1
-					direction = 0
+					index = slidesCount - 1;
+					direction = 0;
 				}
-			} else {
-				if (!infinite) {
-					if (slidesCount - 1 < index - slidesToScroll) {
-						index = slidesCount - slidesToScroll - 1
-						direction = 0
-					}
-					if (slidesCount - 1 < index) {
-						index = slidesCount - 1
-					}
+			} else if (!infinite) {
+				if (slidesCount - 1 < index - slidesToScroll) {
+					index = slidesCount - slidesToScroll - 1;
+					direction = 0;
+				}
+				if (slidesCount - 1 < index) {
+					index = slidesCount - 1;
 				}
 			}
 			// Анимация
-			_AnimateToSlide(index, direction)
+			_AnimateToSlide(index, direction);
 		}
 		/*
 		 * Публичный метод. Перемотка следующий слайд
 		 *
 		 */
 		function nextSlide() {
-			_nextSlide()
+			_nextSlide();
 		}
 		/*
 		 * Приватный метод. Перемотка предыдущий слайд
 		 *
 		 */
 		function _prewSlide() {
-			_stop()
-			let direction = slidesToScroll
+			_stop();
+			let direction = slidesToScroll;
 			// index слайда
-			let index = currentSlide - slidesToScroll
+			let index = currentSlide - slidesToScroll;
 			if (index < 0) {
 				if (infinite) {
 					// Последний слайд, если слайдов больше index
-					index = Math.abs(slidesCount - 1)
+					index = Math.abs(slidesCount - 1);
 				} else {
 					// 1 слайд, если слайдов больше index
-					index = 0
-					direction = currentSlide
+					index = 0;
+					direction = currentSlide;
 				}
 			}
 			// Анимация
-			_AnimateToSlide(index, -direction)
+			_AnimateToSlide(index, -direction);
 		}
 		/*
 		 * Публичный метод. Перемотка предыдущий слайд
 		 *
 		 */
 		function prewSlide() {
-			_prewSlide()
+			_prewSlide();
 		}
 		function _AnimateToSlide(index, direction) {
-			let slideActive = element.querySelector(
-				'.slide-active[data-cloned=false]'
-			)
+			const slideActive = element.querySelector(
+				".slide-active[data-cloned=false]"
+			);
 
-			let sIndex = parseInt(slideActive.getAttribute('data-index'))
-			sIndex = sIndex + direction
+			let sIndex = parseInt(slideActive.getAttribute("data-index"));
+			sIndex += direction;
 			if (!infinite) {
 				if (slidesCount - 1 <= sIndex && slidesToShow > 1) {
-					sIndex = slidesCount - slidesToShow
+					sIndex = slidesCount - slidesToShow;
 				}
 				if (slidesToShow > 1 && sIndex === 0) {
-					sIndex = 0
+					sIndex = 0;
 				}
-			} else {
-				if (sIndex === slidesCount - 1) {
-					sIndex = slidesCount - slidesToShow
-				}
+			} else if (sIndex === slidesCount - 1) {
+				sIndex = slidesCount - slidesToShow;
 			}
 
-			let next = element.querySelector(`[data-index="${sIndex}"]`)
-			let { width, left } = next.getBoundingClientRect()
-			translateX = left - element.getBoundingClientRect().left
-			translateX = translateX * -1
+			const next = element.querySelector(`[data-index="${sIndex}"]`);
+			const { width, left } = next.getBoundingClientRect();
+			translateX = left - element.getBoundingClientRect().left;
+			translateX *= -1;
 
 			if (centerMode) {
-				let centerOffset = (widthContainer - width * slidesToShow) / 2
-				translateX += centerOffset
+				const centerOffset =
+					(widthContainer - width * slidesToShow) / 2;
+				translateX += centerOffset;
 			}
-			element.style.transform = `translate3d(${translateX}px, 0px, 0px)`
+			element.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
 
 			if (transition > 0) {
-				element.style.transition = `transform ${transition}ms`
+				element.style.transition = `transform ${transition}ms`;
 			}
 			setTimeout(() => {
-				element.style.transition = `transform ${0}ms`
-				_setSlide(index)
-			}, transition + 25)
+				element.style.transition = `transform ${0}ms`;
+				_setSlide(index);
+			}, transition + 25);
 		}
 
 		/*
@@ -513,34 +513,34 @@ void (function(window, factory) {
 		 */
 		function _setSlide(index) {
 			// Не клонированные слайды
-			let slide_not_clone = [].slice.call(element.children).filter(el => {
-				return el.getAttribute('data-cloned') === 'false'
-			})
+			const slide_not_clone = [].slice
+				.call(element.children)
+				.filter(el => el.getAttribute("data-cloned") === "false");
 			// Слайд, который надо установить
 			if (!infinite) {
 				if (slidesCount - 1 == index && slidesToShow > 1) {
-					index = slidesCount - slidesToShow
+					index = slidesCount - slidesToShow;
 				}
 			}
-			let slide = element.querySelector(`[data-index="${index}"]`)
+			const slide = element.querySelector(`[data-index="${index}"]`);
 			// Ширина слайдера
-			let { width } = slide_not_clone[index].getBoundingClientRect()
+			const { width } = slide_not_clone[index].getBoundingClientRect();
 
 			if (infinite) {
-				let _index = index
+				let _index = index;
 
 				if (_index >= slidesCount - 1) {
-					_index = slidesCount - slidesToShow
+					_index = slidesCount - slidesToShow;
 				}
 				translateX =
-					width * (slidesToShow + slidesToScroll + _index) * -1
+					width * (slidesToShow + slidesToScroll + _index) * -1;
 			} else {
-				let _index = index
+				let _index = index;
 
 				if (_index >= slidesCount - 1) {
-					_index = slidesCount - slidesToShow
+					_index = slidesCount - slidesToShow;
 				}
-				translateX = width * _index * -1
+				translateX = width * _index * -1;
 				// console.log
 				if (index >= slidesCount - 1) {
 					// widthContainer = container.getBoundingClientRect().width
@@ -550,32 +550,33 @@ void (function(window, factory) {
 
 			// Центрируем, (контейнер - ширина слайдера) / 2
 			if (centerMode) {
-				let centerOffset = (widthContainer - width * slidesToShow) / 2
-				translateX += centerOffset
+				const centerOffset =
+					(widthContainer - width * slidesToShow) / 2;
+				translateX += centerOffset;
 			}
 
 			// Перемещаем панель со слайдами
-			element.style.transform = `translate3d(${translateX}px, 0px, 0px)`
+			element.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
 
 			// Удаляем классы
 			for (let i = 0; i < element.children.length; i++) {
-				element.children[i].classList.remove('slide-active')
+				element.children[i].classList.remove("slide-active");
 			}
 			for (let i = 0; i < slide_not_clone.length; i++) {
-				slide_not_clone[i].classList.remove('slide-active')
+				slide_not_clone[i].classList.remove("slide-active");
 				// slide_not_clone[i].classList.remove('slide-active')
 			}
 
-			if (container.querySelector('.slider-controls')) {
+			if (container.querySelector(".slider-controls")) {
 				for (
 					let i = 0;
 					i <
-					container.querySelector('.slider-controls').children.length;
+					container.querySelector(".slider-controls").children.length;
 					i++
 				) {
 					container
 						.querySelector(`.slider-controls [data-index="${i}"]`)
-						.classList.remove('active')
+						.classList.remove("active");
 				}
 			}
 			// Присваеваем класс
@@ -583,7 +584,7 @@ void (function(window, factory) {
 				if (infinite) {
 					element
 						.querySelector(`[data-index="${index + i}"]`)
-						.classList.add('slide-active')
+						.classList.add("slide-active");
 					if (
 						element.querySelector(
 							`[data-slide-original="${index + i}"]`
@@ -593,47 +594,47 @@ void (function(window, factory) {
 							.querySelector(
 								`[data-slide-original="${index + i}"]`
 							)
-							.classList.add('slide-active')
+							.classList.add("slide-active");
 					}
 				} else {
-					let j = index + i
-					if (j >= slidesCount - 1) j = slidesCount - 1
+					let j = index + i;
+					if (j >= slidesCount - 1) j = slidesCount - 1;
 					element
 						.querySelector(`[data-index="${j}"]`)
-						.classList.add('slide-active')
+						.classList.add("slide-active");
 				}
 
 				if (
-					container.querySelector('.slider-controls') &&
+					container.querySelector(".slider-controls") &&
 					slidesCount > 1
 				) {
-					let j = index + i
+					let j = index + i;
 					if (j > slidesCount - 1)
-						j = slidesCount - (slidesCount - 1) - 1
+						j = slidesCount - (slidesCount - 1) - 1;
 					// container.querySelector(`.slider-controls [data-index="${j}"]`).classList.add('active')
 				}
 			}
-			let _controls_index = index
+			let _controls_index = index;
 			if (slidesToScroll > 1) {
 				_controls_index = Math.ceil(
 					index / Math.ceil(slidesCount / slidesToScroll)
-				)
+				);
 			}
 			if (
-				container.querySelector('.slider-controls') &&
+				container.querySelector(".slider-controls") &&
 				slidesCount > 1
 			) {
 				container
 					.querySelector(
 						`.slider-controls [data-index="${_controls_index}"]`
 					)
-					.classList.add('active')
+					.classList.add("active");
 			}
 			// Установка переменных
-			oldSlide = index
-			currentSlide = index
-			container.setAttribute('data-slide-active', currentSlide + 1)
-			_start()
+			oldSlide = index;
+			currentSlide = index;
+			container.setAttribute("data-slide-active", currentSlide + 1);
+			_start();
 		}
 		/*
 		 * Приватный метод. Перемотка на № слайдер
@@ -641,21 +642,21 @@ void (function(window, factory) {
 		 * slide - № слайда
 		 */
 		function _slideTo(slide) {
-			_stop()
+			_stop();
 
-			let _slidesCount = Math.ceil(slidesCount / slidesToScroll)
+			const _slidesCount = Math.ceil(slidesCount / slidesToScroll);
 			// Math.ceil(slidesCount / slidesToShow) * (slide - 1)
 
 			// console.log(slide, _slidesCount, slidesCount, slidesCount - _slidesCount)
 			// console.log(
 			// Если слайдов больше, выходим
-			if (slide > _slidesCount) return false
+			if (slide > _slidesCount) return false;
 			// Если не текущий слайд
 			if (slide - 1 !== currentSlide) {
 				// Направление
-				slide = (slide - 1) * slidesToScroll
-				let direction = slide - currentSlide
-				_AnimateToSlide(slide, direction)
+				slide = (slide - 1) * slidesToScroll;
+				const direction = slide - currentSlide;
+				_AnimateToSlide(slide, direction);
 			}
 		}
 		/*
@@ -663,10 +664,12 @@ void (function(window, factory) {
 		 *
 		 */
 		function _setSlideDots(event) {
-			_stop()
-			event.preventDefault()
-			let slide = parseInt(event.currentTarget.getAttribute('data-index'))
-			if (!isNaN(slide)) _slideTo(slide + 1)
+			_stop();
+			event.preventDefault();
+			const slide = parseInt(
+				event.currentTarget.getAttribute("data-index")
+			);
+			if (!isNaN(slide)) _slideTo(slide + 1);
 		}
 
 		/*
@@ -675,7 +678,7 @@ void (function(window, factory) {
 		 * slide - № слайда
 		 */
 		function slideTo(slide) {
-			_slideTo(slide)
+			_slideTo(slide);
 		}
 
 		/*
@@ -683,9 +686,9 @@ void (function(window, factory) {
 		 *
 		 */
 		function _start() {
-			interval = clearInterval(interval)
+			interval = clearInterval(interval);
 			if (autoplay) {
-				interval = setInterval(_nextSlide, autoplaySpeed)
+				interval = setInterval(_nextSlide, autoplaySpeed);
 			}
 		}
 
@@ -694,7 +697,7 @@ void (function(window, factory) {
 		 *
 		 */
 		function start() {
-			_start()
+			_start();
 		}
 
 		/*
@@ -702,7 +705,7 @@ void (function(window, factory) {
 		 *
 		 */
 		function _stop() {
-			interval = clearInterval(interval)
+			interval = clearInterval(interval);
 		}
 
 		/*
@@ -710,7 +713,7 @@ void (function(window, factory) {
 		 *
 		 */
 		function stop() {
-			_stop()
+			_stop();
 		}
 
 		/*
@@ -728,14 +731,14 @@ void (function(window, factory) {
 				setup,
 
 				getCurentSlide() {
-					return currentSlide
+					return currentSlide;
 				}
-			}
+			};
 		}
 
-		_setup()
+		_setup();
 
-		return _getAPI()
+		return _getAPI();
 	}
-	return SwipeSlider
-})
+	window.SwipeSlider = SwipeSlider;
+});

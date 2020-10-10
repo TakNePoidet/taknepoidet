@@ -6,9 +6,10 @@
 	</div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import AppHeader from '~/components/HeaderMainPage.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import { mapActions, mapGetters } from "vuex";
+import AppHeader from "~/components/HeaderMainPage.vue";
+import AppFooter from "~/components/AppFooter.vue";
+
 export default {
 	components: {
 		AppHeader,
@@ -19,13 +20,13 @@ export default {
 			htmlAttrs: {
 				class: this.classList
 			}
-		}
+		};
 	},
 	computed: {
-		...mapGetters(['getThemes']),
+		...mapGetters(["getThemes"]),
 		classList() {
-			let list = [`themes-${this.getThemes}`]
-			return list.join(' ')
+			const list = [`themes-${this.getThemes}`];
+			return list.join(" ");
 		}
 	},
 	mounted() {
@@ -34,10 +35,10 @@ export default {
 		}
 	},
 	mounted() {
-		this.$store.commit('setHeader', this.$refs.header)
+		this.$store.commit("setHeader", this.$refs.header);
 	},
 	methods: {
-		...mapActions(['setLocale', 'init'])
+		...mapActions(["setLocale", "init"])
 	}
-}
+};
 </script>

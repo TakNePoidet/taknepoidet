@@ -1,7 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
-Vue.use(Vuex)
+import Vue from "vue";
+import Vuex from "vuex";
+import axios from "axios";
+
+Vue.use(Vuex);
 
 const state = {
 	baseurl: `https://taknepoidet.ru/`,
@@ -9,26 +10,26 @@ const state = {
 	storage: `https://storage.taknepoidet.ru`,
 	lang: {},
 	locale: null,
-	language: ['en', 'ru'],
+	language: ["en", "ru"],
 	header: null,
 	social_networks: [],
 	project: [],
 	landing: [],
-	theme: 'light'
-}
+	theme: "light"
+};
 
 const getters = {
 	getLocale: state => state.locale,
 	getThemes: state => state.theme,
 	getLocaleText: state => val => {
-		let arr = state.lang
-		for (let i of val.split('.')) {
-			arr = arr[i]
-			if (typeof arr === 'undefined') {
-				break
+		let arr = state.lang;
+		for (const i of val.split(".")) {
+			arr = arr[i];
+			if (typeof arr === "undefined") {
+				break;
 			}
 		}
-		return arr
+		return arr;
 	},
 
 	getLanguageList: state => state.language,
@@ -36,80 +37,82 @@ const getters = {
 	getHeader: state => state.header,
 	getProject: state => state.project,
 	getLanding: state => state.landing
-}
+};
 
 const mutations = {
 	setLocale(state, locale) {
-		state.locale = locale
+		state.locale = locale;
 	},
 	setLang(state, lang) {
-		state.lang = lang
+		state.lang = lang;
 	},
 	setHeader(state, header) {
-		state.header = header
+		state.header = header;
 	},
 	setThemes(state, theme) {
-		state.theme = theme
+		state.theme = theme;
 	}
-}
+};
 
 const actions = {
 	async nuxtServerInit({ state, commit }, { isDev, env, req, redirect }) {},
 	async setLocale({ state, commit }, lang) {
 		// if (state.locale === lang) return true;
-		let locate
-		commit('setLocale', lang)
+		let locate;
+		commit("setLocale", lang);
 		try {
-			let { data } = await axios.get(`${state.api}methods/locate/${lang}`)
-			locate = data.lang
-			lang = data.locate
+			const { data } = await axios.get(
+				`${state.api}methods/locate/${lang}`
+			);
+			locate = data.lang;
+			lang = data.locate;
 		} catch (error) {
-			console.log(1)
+			console.log(1);
 		}
 
-		commit('setLang', locate)
-		let cookies
+		commit("setLang", locate);
+		let cookies;
 		if (process.browser) {
-			cookies = this.$cookiz
+			cookies = this.$cookiz;
 		} else {
-			cookies = this.$cookiz
+			cookies = this.$cookiz;
 		}
 
-		if (this.$cookiz.get('locale') !== lang) {
-			cookies.set('locale', lang, {
-				path: '/',
+		if (this.$cookiz.get("locale") !== lang) {
+			cookies.set("locale", lang, {
+				path: "/",
 				maxAge: 60 * 60 * 24 * 7
-			})
+			});
 		}
 	},
 
 	setThemes({ state, commit }, theme) {
-		commit('setThemes', theme)
-		let cookies
+		commit("setThemes", theme);
+		let cookies;
 		if (process.browser) {
-			cookies = this.$cookiz
+			cookies = this.$cookiz;
 		} else {
-			cookies = this.$cookiz
+			cookies = this.$cookiz;
 		}
 
-		if (this.$cookiz.get('theme') !== theme) {
-			cookies.set('theme', theme, {
-				path: '/',
+		if (this.$cookiz.get("theme") !== theme) {
+			cookies.set("theme", theme, {
+				path: "/",
 				maxAge: 60 * 60 * 24 * 7
-			})
+			});
 		}
 	},
 
 	async getNewsApi(context) {
-		let { state } = context
+		const { state } = context;
 		try {
-			let { data } = await axios.get(`${state.api}methods/news`)
-			return data
+			const { data } = await axios.get(`${state.api}methods/news`);
+			return data;
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
 	}
-}
+};
 
 const store = () =>
 	new Vuex.Store({
@@ -117,9 +120,9 @@ const store = () =>
 		mutations,
 		actions,
 		getters
-	})
+	});
 
-export default store
+export default store;
 
 // b = a;
 // for  (let i of 'sec.a'.split('.')) {

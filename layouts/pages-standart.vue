@@ -6,9 +6,9 @@
 	</div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import AppHeader from '~/components/Header.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import { mapActions, mapGetters } from "vuex";
+import AppHeader from "~/components/Header.vue";
+import AppFooter from "~/components/AppFooter.vue";
 
 export default {
 	components: {
@@ -23,63 +23,63 @@ export default {
 			},
 			meta: [
 				{
-					hid: 'description',
-					name: 'description',
+					hid: "description",
+					name: "description",
 					content: this.$store.state.lang.page.index.description
 				},
 				{
-					hid: 'og:description',
-					name: 'og:description',
+					hid: "og:description",
+					name: "og:description",
 					content: this.$store.state.lang.page.index.description
 				},
 				{
-					hid: 'og:image',
-					name: 'og:image',
-					content: '/images/cover-site.jpg'
+					hid: "og:image",
+					name: "og:image",
+					content: "/images/cover-site.jpg"
 				},
 				{
-					hid: 'og:image:url',
-					name: 'og:image:url',
-					content: '/images/cover-site.jpg'
+					hid: "og:image:url",
+					name: "og:image:url",
+					content: "/images/cover-site.jpg"
 				},
 				{
-					hid: 'og:image:secure_url',
-					name: 'og:image:secure_url',
-					content: '/images/cover-site.jpg'
+					hid: "og:image:secure_url",
+					name: "og:image:secure_url",
+					content: "/images/cover-site.jpg"
 				},
 				{
-					hid: 'og:image:width',
-					name: 'og:image:width',
+					hid: "og:image:width",
+					name: "og:image:width",
 					content: 1200
 				},
 				{
-					hid: 'og:image:height',
-					name: 'og:image:height',
+					hid: "og:image:height",
+					name: "og:image:height",
 					content: 600
 				},
 				{
-					hid: 'author',
-					name: 'author',
+					hid: "author",
+					name: "author",
 					content: this.$store.state.lang.page.standart.author
 				},
 				{
-					hid: 'article:author',
-					name: 'article:author',
+					hid: "article:author",
+					name: "article:author",
 					content: this.$store.state.baseurl
 				},
 				{
-					hid: 'og:type',
-					name: 'og:type',
-					content: 'page'
+					hid: "og:type",
+					name: "og:type",
+					content: "page"
 				}
 			]
-		}
+		};
 	},
 	computed: {
-		...mapGetters(['getThemes']),
+		...mapGetters(["getThemes"]),
 		classList() {
-			let list = [`themes-${this.getThemes}`]
-			return list.join(' ')
+			const list = [`themes-${this.getThemes}`];
+			return list.join(" ");
 		}
 	},
 	mounted() {
@@ -88,7 +88,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions(['setLocale'])
+		...mapActions(["setLocale"])
 	}
-}
+};
 </script>

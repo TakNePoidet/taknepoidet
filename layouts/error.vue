@@ -13,7 +13,7 @@ export default {
 			default: null
 		}
 	}
-}
+};
 </script>
 <style lang="scss" scoped>
 .error {

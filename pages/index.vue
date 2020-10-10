@@ -1,22 +1,31 @@
 <template>
 	<main>
-		<div id="home" ref="section-background-images" class="section-background-images jarallax">
-			<img class="jarallax-img" src="/images/cover.jpg" alt>
+		<div id="home"
+			ref="section-background-images"
+			class="section-background-images jarallax">
+			<img class="jarallax-img"
+				src="/images/cover.jpg"
+				alt>
 			<div class="section-background-images__content">
 				<app-logo/>
 			</div>
-			<svg x="0px" y="0px" viewBox="0 0 1501 78" class="section-background-images__bottom">
+			<svg x="0px"
+				y="0px"
+				viewBox="0 0 1501 78"
+				class="section-background-images__bottom">
 				<path d="M0,78,296.48,9.221l829.27,61.094L1501,0V78Z"/>
 			</svg>
 		</div>
-		<div id="about" class="section-about">
+		<div id="about"
+			class="section-about">
 			<h2 class="section-title">{{ $store.state.lang.header.about_me }}</h2>
 			<div>
 				<p v-html="$store.state.lang.section.about.text"/>
 			</div>
 		</div>
 
-		<div id="social" class="section-social-networks social_networks">
+		<div id="social"
+			class="section-social-networks social_networks">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 1501 32.167"
@@ -35,7 +44,8 @@
 					:class="['wow', ((key & 1) ? 'bounceInUp' : 'bounceInDown'),'social_networks__item', 'social_networks__item--' + item.key]"
 					:data-wow-delay="key / 10 + 's'"
 				>
-					<a :href="item.link" target="_blank">
+					<a :href="item.link"
+						target="_blank">
 						<div class="social_networks__item__logo">
 							<i :class="item.icon"/>
 						</div>
@@ -55,10 +65,16 @@
 				/>
 			</svg>
 		</div>
-		<div id="news" class="section-news">
+		<div id="news"
+			class="section-news">
 			<h2 class="section-title">{{ $store.state.lang.section.news.title }}</h2>
-			<div v-if="news.length > 1" ref="news" class="news-container news-container--grid">
-				<news-min v-for="item in news" :key="item.id" :data="item" :animation="true"/>
+			<div v-if="news.length > 1"
+				ref="news"
+				class="news-container news-container--grid">
+				<news-min v-for="item in news"
+					:key="item.id"
+					:data="item"
+					:animation="true"/>
 			</div>
 			<nuxt-link
 				v-if="news.length > 1"
@@ -66,23 +82,30 @@
 				target="blank"
 				class="news-all-list"
 			>{{ $store.state.lang.section.landing_list.more }}</nuxt-link>
-			<div v-if="news.length < 1" class="news__none"/>
+			<div v-if="news.length < 1"
+				class="news__none"/>
 		</div>
 
-		<div id="landing-list" class="section-landing">
+		<div id="landing-list"
+			class="section-landing">
 			<svg
 				class="section-landing-svg-top"
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 1501 52.166"
 			>
-				<path d="M106.969,52.418h0V.253h1501l-1501,52.165Z" transform="translate(-106.969 -0.253)"/>
+				<path d="M106.969,52.418h0V.253h1501l-1501,52.165Z"
+					transform="translate(-106.969 -0.253)"/>
 			</svg>
 			<h2 class="section-title">{{ $store.state.lang.section.landing_list.title }}</h2>
 
 			<div class="landing-crop">
 				<div class="landing-crop__wrap">
-					<div v-for="(item) in rand_landing()" :key="item.key" class="landing-crop-item wow zoomIn">
-						<a :href="item.link" target="_blank" rel="nofollow">
+					<div v-for="(item) in rand_landing()"
+						:key="item.key"
+						class="landing-crop-item wow zoomIn">
+						<a :href="item.link"
+							target="_blank"
+							rel="nofollow">
 							<div class="landing-crop-item__images">
 								<img
 									:src="`${$store.state.storage}/images/landing/crop/${item.filename}@1x.jpg`"
@@ -112,7 +135,8 @@
 				/>
 			</svg>
 		</div>
-		<div id="project" class="project">
+		<div id="project"
+			class="project">
 			<h2 class="section-title">{{ $store.state.lang.section.project.title }}</h2>
 			<div class="project__wrap">
 				<project-item
@@ -127,9 +151,11 @@
 				to="/project/"
 				class="project-all-list"
 			>{{ $store.state.lang.section.landing_list.more }}</nuxt-link>
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1501.37 30.818">
+			<svg xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 1501.37 30.818">
 				<g transform="translate(5277.37 6670)">
-					<path d="M0,30.64H0V0H1501L0,30.64Z" transform="translate(-3776 -6639.36) rotate(180)"/>
+					<path d="M0,30.64H0V0H1501L0,30.64Z"
+						transform="translate(-3776 -6639.36) rotate(180)"/>
 					<path
 						d="M106.969.253h0V30.906H1608.339L106.969.253Z"
 						transform="translate(-5384.339 -6670.087)"
@@ -142,12 +168,13 @@
 
 <script>
 // import SwipeSlider from '~/plugins/SwipeSlider.js'
-import { mapActions, mapGetters } from 'vuex'
-import axios from 'axios'
-import NewsMin from '~/components/news-min.vue'
-import AppLogo from '~/components/AppLogo.vue'
-import ProjectItem from '~/components/ProjectItem.vue'
-import { createMetaTag, createLinkTag } from '~/assets/js/util/meta'
+import { mapActions, mapGetters } from "vuex";
+import axios from "axios";
+import NewsMin from "~/components/news-min.vue";
+import AppLogo from "~/components/AppLogo.vue";
+import ProjectItem from "~/components/ProjectItem.vue";
+import { createMetaTag, createLinkTag } from "~/assets/js/util/meta";
+
 export default {
 	components: {
 		NewsMin,
@@ -159,24 +186,24 @@ export default {
 			title: this.title,
 			meta: [
 				...createMetaTag(this, {
-					'og:type': 'website'
+					"og:type": "website"
 				})
 			],
 			link: [...createLinkTag(this)]
-		}
+		};
 	},
-	layout: 'main',
+	layout: "main",
 	async asyncData({ params, store }) {
-		let { data } = await axios.get(`${store.state.api}methods/all`)
-		let news = data.news
-		let social_networks = data.social_networks
-		let landing = data.landing
-		let project = data.project
+		const { data } = await axios.get(`${store.state.api}methods/all`);
+		const { news } = data;
+		const { social_networks } = data;
+		const { landing } = data;
+		const project = data.project
 			.sort((a, b) => Math.random() - 0.5)
-			.slice(0, 4)
+			.slice(0, 4);
 
-		let title = store.state.lang.page.index.title
-		let description = store.state.lang.page.index.description
+		const { title } = store.state.lang.page.index;
+		const { description } = store.state.lang.page.index;
 
 		return {
 			news,
@@ -185,7 +212,7 @@ export default {
 			landing,
 			title,
 			description
-		}
+		};
 	},
 	data() {
 		return {
@@ -193,22 +220,22 @@ export default {
 			social_networks: [],
 			project: [],
 			landing: [],
-			description: '',
-			title: ''
-		}
+			description: "",
+			title: ""
+		};
 	},
 	computed: {
-		...mapGetters(['getHeader', 'getLocale'])
+		...mapGetters(["getHeader", "getLocale"])
 	},
 
 	mounted() {
-		if (process.browser && navigator.appVersion.indexOf('MSIE 10') === -1) {
-			import('jarallax').then(Response => {
-				let jarallax = Response.default.jarallax
-				jarallax(this.$refs['section-background-images'], {
+		if (process.browser && navigator.appVersion.indexOf("MSIE 10") === -1) {
+			import("jarallax").then(Response => {
+				const { jarallax } = Response.default;
+				jarallax(this.$refs["section-background-images"], {
 					speed: 0
-				})
-			})
+				});
+			});
 
 			// let SwipeSlider = require('~/plugins/SwipeSlider.js')
 			// console.log(SwipeSlider())
@@ -224,47 +251,45 @@ export default {
 	},
 	created() {
 		if (process.browser) {
-			window.addEventListener('scroll', this.windowScroll)
+			window.addEventListener("scroll", this.windowScroll);
 		}
 	},
 	beforeDestroy() {
 		if (process.browser) {
-			window.removeEventListener('scroll', this.windowScroll)
+			window.removeEventListener("scroll", this.windowScroll);
 		}
 	},
 
 	methods: {
 		windowScroll() {
-			let box = this.$refs['section-background-images']
-			let { height } = box.getBoundingClientRect()
-			let scrollTop = window.pageYOffset
+			const box = this.$refs["section-background-images"];
+			const { height } = box.getBoundingClientRect();
+			const scrollTop = window.pageYOffset;
 
 			box.querySelector(
-				'.section-background-images__content'
-			).style.opacity = scrollTop === 0 ? 1 : 1 / ((scrollTop / 100) * 4)
+				".section-background-images__content"
+			).style.opacity = scrollTop === 0 ? 1 : 1 / ((scrollTop / 100) * 4);
 
 			if (scrollTop > height - 90 * 2) {
-				this.getHeader.fixed = true
+				this.getHeader.fixed = true;
 			} else {
-				this.getHeader.fixed = false
-				this.getHeader.open = false
+				this.getHeader.fixed = false;
+				this.getHeader.open = false;
 			}
 		},
 
 		rand_landing() {
 			if (process.browser) {
-				let landing = this.landing.slice()
+				let landing = this.landing.slice();
 
-				landing = landing.filter(el => {
-					return el.top === true
-				})
+				landing = landing.filter(el => el.top === true);
 
-				let rand_landing = landing.sort(function(a, b) {
-					return Math.random() - 0.5
-				})
-				return rand_landing.slice(0, 6)
+				const rand_landing = landing.sort(
+					(a, b) => Math.random() - 0.5
+				);
+				return rand_landing.slice(0, 6);
 			}
 		}
 	}
-}
+};
 </script>

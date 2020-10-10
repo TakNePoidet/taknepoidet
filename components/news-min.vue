@@ -29,7 +29,8 @@
 						class="news__content__text"
 					>
 						<p>{{ data.content | capitalize }}</p>
-						<nuxt-link :to="`/news/${data.slug}/`" class="news__more">{{ $store.state.lang.news.more }}</nuxt-link>
+						<nuxt-link :to="`/news/${data.slug}/`"
+							class="news__more">{{ $store.state.lang.news.more }}</nuxt-link>
 					</div>
 				</div>
 			</div>
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-import { getNewsDescription } from '~/assets/js/util/news'
+import { getNewsDescription } from "~/assets/js/util/news";
 
 export default {
 	filters: {
@@ -47,15 +48,11 @@ export default {
 	props: {
 		data: {
 			type: Object,
-			default: () => {
-				return null
-			}
+			default: () => null
 		},
 		animation: {
 			type: Boolean,
-			default: () => {
-				return false
-			}
+			default: () => false
 		}
 	},
 
@@ -63,56 +60,53 @@ export default {
 		return {
 			slider: null,
 			isMobile: false
-		}
+		};
 	},
 	mounted() {
 		if (process.browser) {
-			this.init()
-			window.addEventListener('resize', this.init)
+			this.init();
+			window.addEventListener("resize", this.init);
 		}
 	},
 
 	beforeDestroy() {
 		if (process.browser && this.slider) {
-			this.slider.destroy()
-			this.slider = null
+			this.slider.destroy();
+			this.slider = null;
 		}
 		if (process.browser) {
-			window.removeEventListener('resize', this.init)
+			window.removeEventListener("resize", this.init);
 		}
 	},
 	methods: {
-		convertHex: function(color) {
-			color = color.replace('#', '')
-			let r = parseInt(color.substring(0, 2), 16)
-			let g = parseInt(color.substring(2, 4), 16)
-			let b = parseInt(color.substring(4, 6), 16)
-			let result = 'rgba(' + r + ',' + g + ',' + b + ',' + 85 / 100 + ')'
-			return result
+		convertHex(color) {
+			color = color.replace("#", "");
+			const r = parseInt(color.substring(0, 2), 16);
+			const g = parseInt(color.substring(2, 4), 16);
+			const b = parseInt(color.substring(4, 6), 16);
+			const result = `rgba(${r},${g},${b},${85 / 100})`;
+			return result;
 		},
 
 		init() {
-			let device = Device()
-			this.isMobile = device.isMobile() || device.isTablet()
-
+			const device = Device();
+			this.isMobile = device.isMobile() || device.isTablet();
 			if (this.isMobile) {
 				if (!this.slider) {
 					this.slider = SwipeSlider(
-						this.$el.querySelector('.swipe'),
+						this.$el.querySelector(".swipe"),
 						{
 							infinite: false,
 							slidesToScroll: 2,
 							dots: true
 						}
-					)
+					);
 				}
-			} else {
-				if (this.slider) {
-					this.slider.destroy()
-					this.slider = null
-				}
+			} else if (this.slider) {
+				this.slider.destroy();
+				this.slider = null;
 			}
 		}
 	}
-}
+};
 </script>
